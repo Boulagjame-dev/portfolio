@@ -3,10 +3,10 @@ import { UserProfile, Project } from './types';
 export const INITIAL_PROFILE: UserProfile = {
   name: "Zakaria Boulagjame",
   title: "AI Workflow & Automation Specialist",
-  tagline: "From Science to Scalable Business",
-  bio: "Medical Physics Graduate turned AI Specialist. Expert in n8n, Make, Zapier, and building scalable automation architectures for E-commerce and B2B Sales.",
-  linkedInUrl: "https://linkedin.com/in/zakaria-boulagjame",
-  avatarUrl: "https://ui-avatars.com/api/?name=Zakaria+Boulagjame&background=a3ffce&color=120b2e&size=256"
+  tagline: "From Scientific Rigor to Business Scalability",
+  bio: "I apply the laws of physics to business logic: Efficiency is mandatory. Friction is eliminated. I build systems that work while you sleep. I engineer self-driving businesses using n8n, Python, and Large Language Models.",
+  linkedInUrl: "https://www.linkedin.com/in/zakaria-boulagjame/",
+  avatarUrl: "https://ui-avatars.com/api/?name=Zakaria+Boulagjame&background=a3ffce&color=120b2e&size=256" // Placeholder for now
 };
 
 export const MOCK_PROJECTS: Project[] = [

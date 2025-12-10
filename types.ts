@@ -7,6 +7,7 @@ export interface Project {
   videoUrl?: string;
   caseStudy?: string;
   repoUrl?: string;
+  businessOutcome?: string; // New field for ROI/Impact
 }
 
 export interface UserProfile {

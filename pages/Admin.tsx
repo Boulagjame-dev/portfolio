@@ -33,7 +33,8 @@ export const Admin: React.FC = () => {
     description: '',
     tags: [],
     imageUrl: '',
-    repoUrl: ''
+    repoUrl: '',
+    businessOutcome: ''
   });
 
   // Fetch Projects from Supabase on mount
@@ -58,7 +59,8 @@ export const Admin: React.FC = () => {
         imageUrl: item.image_url,
         repoUrl: item.repo_url,
         caseStudy: item.case_study,
-        videoUrl: item.video_url
+        videoUrl: item.video_url,
+        businessOutcome: item.business_outcome
       }));
       setProjects(mappedProjects);
     } catch (err) {
@@ -106,7 +108,8 @@ export const Admin: React.FC = () => {
       tags: project.tags,
       imageUrl: project.imageUrl,
       caseStudy: project.caseStudy,
-      repoUrl: project.repoUrl || ''
+      repoUrl: project.repoUrl || '',
+      businessOutcome: project.businessOutcome || ''
     });
     setSelectedFile(null); // Reset file input
     setSuccessMessage('');
@@ -123,7 +126,8 @@ export const Admin: React.FC = () => {
       tags: [],
       imageUrl: '',
       caseStudy: '',
-      repoUrl: ''
+      repoUrl: '',
+      businessOutcome: ''
     });
   };
 
@@ -189,6 +193,7 @@ export const Admin: React.FC = () => {
         image_url: finalImageUrl,
         repo_url: projectForm.repoUrl,
         case_study: projectForm.caseStudy,
+        business_outcome: projectForm.businessOutcome,
         updated_at: new Date().toISOString()
       };
 
@@ -415,6 +420,17 @@ export const Admin: React.FC = () => {
             value={projectForm.description}
             onChange={(e) => setProjectForm({ ...projectForm, description: e.target.value })}
             className="w-full bg-black/30 border border-white/20 rounded p-3 text-white focus:border-lumina-accent outline-none h-24 transition-all clickable"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="text-xs text-lumina-accent mb-1 block uppercase tracking-wider font-bold">Business Outcome (ROI)</label>
+          <input
+            type="text"
+            placeholder="e.g. Saved 20hrs/week, Generated $10k, Reduced Errors by 99%"
+            value={projectForm.businessOutcome}
+            onChange={(e) => setProjectForm({ ...projectForm, businessOutcome: e.target.value })}
+            className="w-full bg-black/30 border border-lumina-accent/30 rounded p-3 text-white focus:border-lumina-accent outline-none transition-all clickable font-mono text-sm"
           />
         </div>
 
