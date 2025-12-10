@@ -78,7 +78,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         </div>
 
         <div className="flex items-center gap-4">
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="clickable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
+          <a href="https://www.linkedin.com/in/zakaria-boulagjame/" target="_blank" rel="noopener noreferrer" className="clickable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
             <Linkedin size={18} />
           </a>
         </div>
