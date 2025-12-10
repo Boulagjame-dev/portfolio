@@ -274,7 +274,20 @@ export const Home: React.FC = () => {
                                             />
                                         </div>
                                     </div>
-
+                                    <a
+                                        href="https://calendly.com/boulagjame/30min"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="block group bg-white text-black p-6 rounded-2xl hover:bg-lumina-accent transition-all duration-300 shadow-xl border border-transparent hover:border-white/50 clickable"
+                                    >
+                                        <div className="flex justify-between items-center mb-2">
+                                            <span className="font-bold text-xl">Book a 30-Min Audit</span>
+                                            <ArrowRight className="w-6 h-6 group-hover:-rotate-45 transition-transform duration-300" />
+                                        </div>
+                                        <div className="text-sm opacity-70 flex items-center gap-2">
+                                            <Calendar size={14} /> Direct Calendar Access
+                                        </div>
+                                    </a>
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
