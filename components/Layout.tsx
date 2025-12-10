@@ -12,14 +12,12 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const isAdmin = location.pathname === '/admin';
-  const [isOfflineMode, setIsOfflineMode] = useState(false);
-
   useEffect(() => {
-    // Check connection health periodically
+    // Check connection health - OPTIONAL: We can keep this just for logging, but removing the "Offline Mode" state as requested.
     const checkConnection = async () => {
       const { error } = await supabase.from('projects').select('id').limit(1);
-      if (error && error.message.includes('not find the table')) {
-        setIsOfflineMode(true);
+      if (error) {
+        console.error("Supabase Connection Check Failed:", error);
       }
     };
     checkConnection();
@@ -99,11 +97,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <footer className="py-12 text-center border-t border-white/10 relative z-10 bg-lumina-bg">
         <div className="flex flex-col items-center gap-2">
           <p className="text-gray-500 font-mono text-xs uppercase tracking-widest">© 2025 Zakaria Boulagjame • Visual Euphoria in Automation</p>
-          {isOfflineMode && (
-            <div className="text-[10px] text-yellow-600 flex items-center gap-1 opacity-50">
-              <HardDrive size={8} /> Local Storage Mode
-            </div>
-          )}
+
         </div>
       </footer>
     </div>

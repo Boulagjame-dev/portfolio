@@ -23,7 +23,7 @@ export const Admin: React.FC = () => {
     }
   }, [navigate]);
 
-  const [usingLocalStorage, setUsingLocalStorage] = useState(false);
+
 
   // Form State
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -61,14 +61,9 @@ export const Admin: React.FC = () => {
         videoUrl: item.video_url
       }));
       setProjects(mappedProjects);
-      setUsingLocalStorage(false);
     } catch (err) {
-      console.warn('Supabase fetch failed, falling back to local storage:', err);
-      const stored = localStorage.getItem('portfolio_projects');
-      if (stored) {
-        setProjects(JSON.parse(stored));
-      }
-      setUsingLocalStorage(true);
+      console.error('Supabase fetch failed:', err);
+      // No fallback
     }
   };
 
@@ -84,19 +79,12 @@ export const Admin: React.FC = () => {
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       try {
-        // Try Supabase Delete
         const { error } = await supabase
           .from('projects')
           .delete()
           .eq('id', id);
 
-        // If Supabase fails or we are in local mode, delete from local storage
-        if (error || usingLocalStorage) {
-          const localProjects = JSON.parse(localStorage.getItem('portfolio_projects') || '[]');
-          const updatedLocal = localProjects.filter((p: Project) => p.id !== id);
-          localStorage.setItem('portfolio_projects', JSON.stringify(updatedLocal));
-          if (!usingLocalStorage && error) console.warn("Deleted locally because Supabase failed");
-        }
+        if (error) throw error;
 
         // Optimistic update
         setProjects(projects.filter(p => p.id !== id));
@@ -194,7 +182,6 @@ export const Admin: React.FC = () => {
         }
       }
 
-      // 2. Prepare Data for Supabase (snake_case)
       const supabaseData = {
         title: projectForm.title,
         description: projectForm.description,
@@ -205,61 +192,17 @@ export const Admin: React.FC = () => {
         updated_at: new Date().toISOString()
       };
 
-      // 3. Try Saving to Supabase DB
-      let savedToSupabase = false;
-      try {
-        if (editingId) {
-          const { error } = await supabase.from('projects').update(supabaseData).eq('id', editingId);
-          if (error) throw error;
-        } else {
-          const { error } = await supabase.from('projects').insert([{ id: crypto.randomUUID(), ...supabaseData, created_at: new Date().toISOString() }]);
-          if (error) throw error;
-        }
-        savedToSupabase = true;
-      } catch (dbError) {
-        console.warn("Supabase DB save failed. Saving to Local Storage instead.", dbError);
-      }
-
-      // 4. Always Update Local Storage (Fallback or Cache)
-      const localId = editingId || crypto.randomUUID();
-      const localProject: Project = {
-        id: localId,
-        title: projectForm.title,
-        description: projectForm.description || '',
-        tags: projectForm.tags || [],
-        imageUrl: finalImageUrl,
-        repoUrl: projectForm.repoUrl,
-        caseStudy: projectForm.caseStudy,
-      };
-
-      const storedProjects = JSON.parse(localStorage.getItem('portfolio_projects') || '[]');
-      let newProjectsList = [...storedProjects];
-
-      const existingIndex = newProjectsList.findIndex((p: Project) => p.id === localId);
-      if (existingIndex >= 0) {
-        newProjectsList[existingIndex] = localProject;
+      if (editingId) {
+        const { error } = await supabase.from('projects').update(supabaseData).eq('id', editingId);
+        if (error) throw error;
       } else {
-        newProjectsList.unshift(localProject);
+        const { error } = await supabase.from('projects').insert([{ id: crypto.randomUUID(), ...supabaseData, created_at: new Date().toISOString() }]);
+        if (error) throw error;
       }
 
-      localStorage.setItem('portfolio_projects', JSON.stringify(newProjectsList));
-
-      // Update UI state
-      setProjects(newProjectsList); // Update immediately from local state
-
-      const message = savedToSupabase
-        ? "Project saved to Supabase!"
-        : "Supabase unreachable. Project saved to Local Storage.";
-
-      setSuccessMessage(message);
+      setSuccessMessage("Project saved to Supabase!");
       resetForm();
-
-      // If we saved to Supabase, fetch fresh data to be sure, otherwise we already set local state
-      if (savedToSupabase) {
-        await fetchProjects();
-      } else {
-        setUsingLocalStorage(true);
-      }
+      await fetchProjects();
 
     } catch (err: any) {
       console.error("Critical Save Error", err);
@@ -376,9 +319,8 @@ export const Admin: React.FC = () => {
         <h1 className="text-4xl font-display font-bold">Dashboard</h1>
         <div className="flex flex-col items-end">
           <div className="text-sm text-gray-400">Manage your portfolio content</div>
-          <div className={`text-[10px] flex items-center gap-1 mt-1 ${usingLocalStorage ? 'text-yellow-500' : 'text-lumina-accent'}`}>
-            {usingLocalStorage ? <HardDrive size={10} /> : <Database size={10} />}
-            {usingLocalStorage ? 'Saving to Local Storage' : 'Connected to Supabase'}
+          <div className="text-[10px] flex items-center gap-1 mt-1 text-lumina-accent">
+            <Database size={10} /> Connected to Supabase
           </div>
         </div>
       </div>
