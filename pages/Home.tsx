@@ -94,10 +94,27 @@ export const Home: React.FC = () => {
                         <span className="font-mono text-xs text-lumina-accent uppercase tracking-[0.2em] font-bold">Systematize Your Growth</span>
                     </div>
 
-                    <h1 className="fantasy-text font-display font-bold text-[8vw] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40 select-none tracking-tighter max-w-6xl mx-auto">
-                        PRECISION<br />
-                        AUTOMATION<br />
-                        <span className="text-lumina-accent">ARCHITECTURE</span>
+                    <h1 className="font-display font-bold text-[8vw] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40 select-none tracking-tighter max-w-6xl mx-auto">
+                        {/* PRECISION */}
+                        <div className="inline-block">
+                            {"PRECISION".split('').map((char, i) => (
+                                <span key={i} className="fantasy-char text-white hover:text-white transition-colors">{char}</span>
+                            ))}
+                        </div>
+                        <br />
+                        {/* AUTOMATION */}
+                        <div className="inline-block">
+                            {"AUTOMATION".split('').map((char, i) => (
+                                <span key={i} className="fantasy-char text-white hover:text-white transition-colors">{char}</span>
+                            ))}
+                        </div>
+                        <br />
+                        {/* ARCHITECTURE */}
+                        <div className="inline-block">
+                            {"ARCHITECTURE".split('').map((char, i) => (
+                                <span key={i} className="fantasy-char text-lumina-accent hover:text-lumina-accent transition-colors">{char}</span>
+                            ))}
+                        </div>
                     </h1>
 
                     <p className="max-w-2xl mx-auto mt-12 text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
