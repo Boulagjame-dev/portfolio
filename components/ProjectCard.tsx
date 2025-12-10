@@ -34,7 +34,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             <img
               src={project.imageUrl}
               alt={project.title}
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-110"
+              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-110 brightness-110 contrast-110"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-white/5 border-b border-white/5">
@@ -54,7 +54,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             </div>
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-lumina-bg to-transparent opacity-90" />
+          <div className="absolute inset-0 bg-gradient-to-t from-lumina-bg to-transparent opacity-60" />
 
           <div className="absolute top-4 right-4 flex gap-2 z-20">
             {project.repoUrl && (

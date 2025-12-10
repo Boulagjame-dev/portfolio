@@ -1,4 +1,5 @@
 import React from 'react';
+import { Database, CreditCard, Cpu, Server } from 'lucide-react';
 
 const LOGOS = [
     { name: "n8n Partner", url: "https://upload.wikimedia.org/wikipedia/commons/f/f6/N8n-logo.png" }, // Placeholder, in real world use SVGs
@@ -27,25 +28,30 @@ export const Testimonials: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-24 text-left">
-                    <div className="bg-white/5 p-8 rounded-2xl border border-white/5 relative">
-                        <div className="text-lumina-accent text-4xl font-serif absolute top-4 left-4 opacity-20">"</div>
-                        <p className="text-gray-300 italic mb-6 relative z-10">
-                            "Zakaria didn't just automate our lead flow; he completely re-engineered our sales process. We're getting 3x the qualified leads with zero manual data entry."
-                        </p>
-                        <div>
-                            <div className="font-bold text-white">Sarah Jenkins</div>
-                            <div className="text-xs text-gray-500 uppercase tracking-wider">COO, TechFlow Logistics</div>
+                <div className="mt-24">
+                    <p className="font-mono text-xs text-gray-500 uppercase tracking-[0.2em] mb-12">
+                        Powered by Best-in-Class Infrastructure
+                    </p>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                        {/* Supabase */}
+                        <div className="bg-white/5 border border-white/5 p-6 rounded-xl flex flex-col items-center justify-center gap-4 hover:bg-white/10 hover:border-lumina-accent/20 transition-all group">
+                            <Database className="w-8 h-8 text-lumina-accent" />
+                            <span className="font-bold text-white group-hover:text-lumina-accent">Supabase</span>
                         </div>
-                    </div>
-                    <div className="bg-white/5 p-8 rounded-2xl border border-white/5 relative">
-                        <div className="text-lumina-accent text-4xl font-serif absolute top-4 left-4 opacity-20">"</div>
-                        <p className="text-gray-300 italic mb-6 relative z-10">
-                            "The custom ERP dashboard he built gave us visibility we didn't know was possible. It's like having a dedicated analyst working 24/7."
-                        </p>
-                        <div>
-                            <div className="font-bold text-white">Michael Ross</div>
-                            <div className="text-xs text-gray-500 uppercase tracking-wider">Founder, EcomScale</div>
+                        {/* Stripe */}
+                        <div className="bg-white/5 border border-white/5 p-6 rounded-xl flex flex-col items-center justify-center gap-4 hover:bg-white/10 hover:border-lumina-accent/20 transition-all group">
+                            <CreditCard className="w-8 h-8 text-blue-400" />
+                            <span className="font-bold text-white group-hover:text-blue-400">Stripe</span>
+                        </div>
+                        {/* Pinecone / Vector DB */}
+                        <div className="bg-white/5 border border-white/5 p-6 rounded-xl flex flex-col items-center justify-center gap-4 hover:bg-white/10 hover:border-lumina-accent/20 transition-all group">
+                            <Cpu className="w-8 h-8 text-purple-400" />
+                            <span className="font-bold text-white group-hover:text-purple-400">Pinecone</span>
+                        </div>
+                        {/* Python/FastAPI */}
+                        <div className="bg-white/5 border border-white/5 p-6 rounded-xl flex flex-col items-center justify-center gap-4 hover:bg-white/10 hover:border-lumina-accent/20 transition-all group">
+                            <Server className="w-8 h-8 text-yellow-400" />
+                            <span className="font-bold text-white group-hover:text-yellow-400">FastAPI</span>
                         </div>
                     </div>
                 </div>

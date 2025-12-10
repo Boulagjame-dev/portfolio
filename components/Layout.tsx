@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Linkedin, Github, Lock, Brain, Eye, Database, HardDrive } from 'lucide-react';
 import { CustomCursor } from './CustomCursor';
 import { supabase } from '../services/supabase';
+import Lenis from 'lenis';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -52,6 +53,30 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  // Lenis Smooth Scroll
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col relative cursor-none">
