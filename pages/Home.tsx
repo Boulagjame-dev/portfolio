@@ -94,7 +94,7 @@ export const Home: React.FC = () => {
                         <span className="font-mono text-xs text-lumina-accent uppercase tracking-[0.2em] font-bold">Systematize Your Growth</span>
                     </div>
 
-                    <h1 className="font-display font-bold text-[8vw] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40 select-none tracking-tighter max-w-6xl mx-auto">
+                    <h1 className="fantasy-text font-display font-bold text-[8vw] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40 select-none tracking-tighter max-w-6xl mx-auto">
                         PRECISION<br />
                         AUTOMATION<br />
                         <span className="text-lumina-accent">ARCHITECTURE</span>
