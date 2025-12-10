@@ -291,19 +291,26 @@ export const Home: React.FC = () => {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
+                                        className="w-full bg-lumina-accent text-black font-bold py-4 rounded-lg hover:bg-white transition-all flex items-center justify-center gap-2 group clickable disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isSubmitting ? (
+                                            <span>Sending...</span>
+                                        ) : (
+                                            <>
+                                                <span>Send Message</span>
                                                 <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                </>
+                                            </>
                                         )}
-                            </button>
-                            <p className="text-[10px] text-center text-gray-500 mt-2">
-                                *Opens your default email client
-                            </p>
+                                    </button>
+                                    <p className="text-[10px] text-center text-gray-500 mt-2">
+                                        *Opens your default email client
+                                    </p>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
+            </section>
         </div>
-                </div >
-            </section >
-        </div >
     );
 };
