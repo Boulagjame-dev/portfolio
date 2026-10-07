@@ -5,7 +5,7 @@ import { ProjectCard } from '../components/ProjectCard';
 import { Testimonials } from '../components/Testimonials';
 import { MOCK_PROJECTS, INITIAL_PROFILE } from '../constants';
 import { Project } from '../types';
-import { Send, Mail, ArrowRight, Calendar } from 'lucide-react';
+import { Send, Mail, ArrowRight, Calendar, CheckCircle } from 'lucide-react';
 import { supabase } from '../services/supabase';
 
 export const Home: React.FC = () => {
@@ -25,6 +25,7 @@ export const Home: React.FC = () => {
         message: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSent, setIsSent] = useState(false);
 
     // Fetch from Supabase with LocalStorage Fallback
     useEffect(() => {
@@ -85,8 +86,9 @@ export const Home: React.FC = () => {
             window.location.href = mailtoLink;
             setIsSubmitting(false);
             setFormData({ name: '', email: '', message: '' });
-            alert("Opening your email client to send request...");
-        }, 800);
+            setIsSent(true);
+            setTimeout(() => setIsSent(false), 8000);
+        }, 400);
     };
 
     return (
@@ -334,6 +336,13 @@ export const Home: React.FC = () => {
                                             placeholder="Describe the repetitive task or workflow that is slowing you down..."
                                         />
                                     </div>
+
+                                    {isSent && (
+                                        <div className="p-3 mb-4 bg-lumina-accent/15 border border-lumina-accent/50 rounded-lg text-lumina-accent text-xs font-mono text-center flex items-center justify-center gap-2">
+                                            <CheckCircle className="w-4 h-4 shrink-0 text-lumina-accent" />
+                                            <span>Email draft opened for boulagjame@gmail.com</span>
+                                        </div>
+                                    )}
 
                                     <button
                                         type="submit"

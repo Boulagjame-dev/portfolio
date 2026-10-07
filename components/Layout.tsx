@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Linkedin, Github, Lock, Brain, Eye, Database, HardDrive } from 'lucide-react';
+import { Linkedin, Github, Brain, Eye, Menu, X } from 'lucide-react';
 import { CustomCursor } from './CustomCursor';
 import { supabase } from '../services/supabase';
 import Lenis from 'lenis';
@@ -12,13 +12,15 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isAdmin = location.pathname === '/admin';
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Connection check without noisy console errors
   useEffect(() => {
-    // Check connection health - OPTIONAL: We can keep this just for logging, but removing the "Offline Mode" state as requested.
     const checkConnection = async () => {
-      const { error } = await supabase.from('projects').select('id').limit(1);
-      if (error) {
-        console.error("Supabase Connection Check Failed:", error);
+      try {
+        await supabase.from('projects').select('id').limit(1);
+      } catch {
+        // Silent fallback to local production data
       }
     };
     checkConnection();
@@ -41,9 +43,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   }, [navigate]);
 
   const handleNavClick = (id: string) => {
+    setMobileMenuOpen(false);
     if (location.pathname !== '/') {
       navigate('/');
-      // Short timeout to allow the home page to mount before scrolling
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -94,18 +96,68 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           <span className="font-display font-bold tracking-widest text-lg md:text-xl uppercase">ZAKARIA BOULAGJAME</span>
         </Link>
 
+        {/* Desktop Links */}
         <div className="flex items-center gap-8 font-display text-sm uppercase tracking-widest hidden md:flex">
           <button onClick={() => handleNavClick('projects')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">Work</button>
           <button onClick={() => handleNavClick('experience')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">Experience</button>
           <button onClick={() => handleNavClick('contact')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">Contact</button>
         </div>
 
-        <div className="flex items-center gap-4">
-          <a href="https://www.linkedin.com/in/zakaria-boulagjame/" target="_blank" rel="noopener noreferrer" className="clickable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors">
+        {/* Social Icons & Mobile Toggle */}
+        <div className="flex items-center gap-3">
+          <a
+            href="https://github.com/Boulagjame-dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="GitHub Profile"
+            className="clickable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors"
+          >
+            <Github size={18} />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/zakaria-boulagjame/"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="LinkedIn Profile"
+            className="clickable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors"
+          >
             <Linkedin size={18} />
           </a>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden clickable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
       </nav>
+
+      {/* Mobile Drawer Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col justify-center items-center gap-8 md:hidden">
+          <button
+            onClick={() => handleNavClick('projects')}
+            className="text-2xl font-display uppercase tracking-widest text-white hover:text-lumina-accent transition-colors clickable"
+          >
+            Work
+          </button>
+          <button
+            onClick={() => handleNavClick('experience')}
+            className="text-2xl font-display uppercase tracking-widest text-white hover:text-lumina-accent transition-colors clickable"
+          >
+            Experience
+          </button>
+          <button
+            onClick={() => handleNavClick('contact')}
+            className="text-2xl font-display uppercase tracking-widest text-white hover:text-lumina-accent transition-colors clickable"
+          >
+            Contact
+          </button>
+        </div>
+      )}
 
       {/* Background Elements */}
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -119,10 +171,38 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </main>
 
+      {/* Footer */}
       <footer className="py-12 text-center border-t border-white/10 relative z-10 bg-lumina-bg">
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-gray-500 font-mono text-xs uppercase tracking-widest">© 2025 Zakaria Boulagjame • Visual Euphoria in Automation</p>
-
+        <div className="max-w-6xl mx-auto px-6 flex flex-col items-center gap-4">
+          <div className="flex flex-wrap justify-center items-center gap-6">
+            <a
+              href="https://github.com/Boulagjame-dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-lumina-accent transition-colors flex items-center gap-2 font-mono text-xs uppercase tracking-wider clickable"
+            >
+              <Github size={14} /> GitHub
+            </a>
+            <span className="text-white/20 hidden sm:inline">•</span>
+            <a
+              href="https://www.linkedin.com/in/zakaria-boulagjame/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-lumina-accent transition-colors flex items-center gap-2 font-mono text-xs uppercase tracking-wider clickable"
+            >
+              <Linkedin size={14} /> LinkedIn
+            </a>
+            <span className="text-white/20 hidden sm:inline">•</span>
+            <a
+              href="mailto:boulagjame@gmail.com"
+              className="text-gray-400 hover:text-lumina-accent transition-colors flex items-center gap-2 font-mono text-xs uppercase tracking-wider clickable"
+            >
+              boulagjame@gmail.com
+            </a>
+          </div>
+          <p className="text-gray-500 font-mono text-xs uppercase tracking-widest mt-2">
+            © 2026 Zakaria Boulagjame • Visual Euphoria in Automation
+          </p>
         </div>
       </footer>
     </div>
