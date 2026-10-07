@@ -95,7 +95,7 @@ export const Home: React.FC = () => {
                 <div className="text-center z-10 px-4">
                     <div className="inline-block mb-8 px-4 py-2 border border-lumina-accent/30 rounded-full bg-lumina-accent/5 backdrop-blur clickable transition-transform hover:scale-105">
                         <span className="font-mono text-xs text-lumina-accent uppercase tracking-[0.2em] font-bold">
-                            {lang === 'fr' ? 'Systématisez Votre Croissance' : lang === 'ru' ? 'Систематизируйте Рост Бизнеса' : 'Systematize Your Growth'}
+                            {lang === 'fr' ? 'Forward Deployed Engineering • Systèmes Critiques' : lang === 'ru' ? 'Forward Deployed Engineering • Критические Системы' : 'Forward Deployed Engineering • Mission-Critical Systems'}
                         </span>
                     </div>
 
@@ -134,12 +134,14 @@ export const Home: React.FC = () => {
                         );
                     })()}
 
-                    <p className="max-w-2xl mx-auto mt-12 text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
-                        {lang === 'fr' ? INITIAL_PROFILE.taglineFr : lang === 'ru' ? INITIAL_PROFILE.taglineRu : INITIAL_PROFILE.tagline}. {lang === 'fr' 
-                            ? <span>Spécialisé en <span className="text-white font-medium">React, Supabase, n8n, & LLMs</span> pour concevoir des systèmes agiles et des entreprises autonomes.</span>
-                            : lang === 'ru'
-                            ? <span>Специализация на <span className="text-white font-medium">React, Supabase, n8n и LLM</span> для создания масштабируемых платформ и автономных бизнес-систем.</span>
-                            : <span>Specializing in <span className="text-white font-medium">React, Supabase, n8n, & LLMs</span> to engineer high-velocity platforms and self-driving systems.</span>}
+                    <p className="max-w-3xl mx-auto mt-12 text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
+                        {lang === 'fr' ? (
+                            <span>De la physique aux systèmes critiques : j'ingénie des <span className="text-white font-medium">architectures logicielles durcies</span>, des <span className="text-white font-medium">moteurs transactionnels</span> et des <span className="text-white font-medium">agents IA opérationnels</span> à fort impact financier.</span>
+                        ) : lang === 'ru' ? (
+                            <span>От прикладной физики к критическим системам: проектирую <span className="text-white font-medium">отказоустойчивые архитектуры</span>, <span className="text-white font-medium">транзакционные ядра</span> и <span className="text-white font-medium">боевых ИИ-агентов</span> с прямым финансовым результатом.</span>
+                        ) : (
+                            <span>From applied physics to mission-critical systems: engineering <span className="text-white font-medium">fault-tolerant architectures</span>, <span className="text-white font-medium">robust transaction engines</span>, and <span className="text-white font-medium">operational AI swarms</span> built for measurable financial impact.</span>
+                        )}
                     </p>
 
                     {/* CTAs: Strategy Audit + Download Resume */}

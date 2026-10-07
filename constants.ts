@@ -2,15 +2,15 @@ import { UserProfile, Project, TestimonialItem } from './types';
 
 export const INITIAL_PROFILE: UserProfile = {
   name: "Zakaria Boulagjame",
-  title: "AI Workflow & Full-Stack Systems Architect",
-  titleFr: "Architecte Systèmes Full-Stack & Automatisation IA",
-  titleRu: "Архитектор ИИ-систем и Full-Stack автоматизации",
-  tagline: "From Scientific Rigor to Business Scalability",
-  taglineFr: "De la Rigueur Scientifique à la Scalabilité Opérationnelle",
-  taglineRu: "От научной строгости к операционной масштабируемости",
-  bio: "I apply the laws of physics to business logic: Efficiency is mandatory. Friction is eliminated. I engineer high-performance web platforms, smart POS architectures, and autonomous agentic workflows using React, TypeScript, Python, n8n, Supabase, and LLMs.",
-  bioFr: "J'applique les lois de la physique à la logique d'entreprise : l'efficacité est obligatoire, la friction est éliminée. Je conçois des plateformes web scalables, des architectures de caisse intelligentes et des workflows IA autonomes avec React, TypeScript, Python, n8n, Supabase et LLMs.",
-  bioRu: "Применяю законы физики к бизнес-логике: эффективность обязательна, трение устранено. Я создаю высокопроизводительные веб-платформы, умные облачные POS-системы и автономные агентные процессы с использованием React, TypeScript, Python, n8n, Supabase и LLM.",
+  title: "Forward Deployed Engineer & Systems Architect",
+  titleFr: "Forward Deployed Engineer & Architecte Systèmes",
+  titleRu: "Forward Deployed Engineer & Архитектор Систем",
+  tagline: "From Applied Physics to Mission-Critical Systems",
+  taglineFr: "De la Physique aux Systèmes Critiques",
+  taglineRu: "От прикладной физики к критическим системам",
+  bio: "Forward Deployed Engineer bridging applied physics rigor with mission-critical systems: efficiency is mandatory, friction is eliminated. I engineer fault-tolerant platforms, high-reliability transaction engines, and operational AI swarms built directly for enterprise field execution and tangible financial impact.",
+  bioFr: "Forward Deployed Engineer appliquant la rigueur de la physique aux systèmes critiques : l'efficacité est obligatoire, la friction est éliminée. Je conçois et déploie des architectures logicielles durcies, des moteurs transactionnels haute disponibilité et des agents IA opérationnels à fort impact financier.",
+  bioRu: "Forward Deployed Engineer, переносящий строгость прикладной физики в критические системы: эффективность обязательна, трение устранено. Я проектирую и развертываю отказоустойчивые архитектуры, надежные транзакционные ядра и боевых ИИ-агентов с прямым финансовым результатом.",
   linkedInUrl: "https://www.linkedin.com/in/zakaria-boulagjame/",
   avatarUrl: "https://github.com/Boulagjame-dev.png"
 };
