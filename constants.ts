@@ -1,4 +1,4 @@
-﻿import { UserProfile, Project, TestimonialItem } from './types';
+import { UserProfile, Project, TestimonialItem } from './types';
 
 export const INITIAL_PROFILE: UserProfile = {
   name: "Zakaria Boulagjame",
@@ -46,8 +46,8 @@ export const MOCK_PROJECTS: Project[] = [
   },
   {
     id: 'fofinette-pos',
-    title: "Fofinette POS & AI Suite",
-    titleFr: "Fofinette POS & Suite IA",
+    title: "Fofinette by Zeyna — POS & AI Suite",
+    titleFr: "Fofinette by Zeyna — POS & Suite IA",
     category: 'AI & Automation',
     description: "Smart retail & culinary POS connected to an autonomous n8n backend: automated invoice OCR extraction (Gemini Vision), real-time Telegram sales telemetry, and instant stock threshold alerts.",
     descriptionFr: "Caisse tactile connectée à un backend d'automatisation n8n : extraction OCR IA des factures fournisseurs (Gemini Vision), alertes ventes et stocks critiques sur Telegram.",
@@ -190,10 +190,10 @@ export const CLIENT_TESTIMONIALS: TestimonialItem[] = [
   },
   {
     id: 'fofinette',
-    author: "S. Bennani",
-    role: "Culinary Operations Lead",
-    roleFr: "Responsable d'Exploitation",
-    company: "Fofinette Gourmandises",
+    author: "D. Zegrani",
+    role: "Founder & Executive Director",
+    roleFr: "Fondatrice & Direction",
+    company: "Fofinette by Zeyna",
     content: "The automated n8n OCR invoice processing and instant Telegram alerts have completely removed our administrative bottlenecks. Invoices are parsed into Supabase in seconds with zero manual data entry.",
     contentFr: "L'OCR automatique des factures via n8n et les alertes Telegram instantanées ont totalement débloqué notre gestion. Les factures sont intégrées dans Supabase en quelques secondes sans aucune ressaisie manuelle.",
     rating: 5,

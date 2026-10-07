@@ -1,4 +1,4 @@
-﻿# ⚡ Zakaria.AI — Immersive Engineering & Automation Portfolio
+# ⚡ Zakaria.AI — Immersive Engineering & Automation Portfolio
 
 <div align="center">
 
@@ -37,7 +37,7 @@ Designed with **Lumina Aesthetics** (Deep Violet `#120b2e`, Neon Mint `#a3ffce`,
 | :--- | :--- | :--- | :--- |
 | **[CECOT-POS](https://github.com/Boulagjame-dev/CECOT-POS)** | Retail & POS | React 18, Supabase, Tailwind, HTML5 QR/Barcode | **0 Cash Discrepancy** & 12h/week saved in stock auditing |
 | **[CECOT Vitrine](https://github.com/Boulagjame-dev/cecot-vitrine)** | SaaS & Web Apps | Vanilla JS, Node.js, Schema.org JSON-LD, SEO/GEO | **+85% Local Search Visibility** & Automated blueprint quote generation |
-| **[Fofinette POS & AI Suite](https://github.com/Boulagjame-dev/fofinette-pos)** | AI & Automation | React, Supabase, n8n, Gemini Vision OCR, Telegram Bot | **10x Faster Supplier Ingestion** & Real-time cash telemetry |
+| **[Fofinette by Zeyna — POS & AI Suite](https://github.com/Boulagjame-dev/fofinette-pos)** | AI & Automation | React, Supabase, n8n, Gemini Vision OCR, Telegram Bot | **10x Faster Supplier Ingestion** & Real-time cash telemetry |
 | **Coop-SaaS Maroc** | SaaS & Web Apps | Supabase PostgreSQL, Row-Level Security, Multi-tenant | **100% Statutory Compliance (Law 112-12)** & Full INDH subsidy tracking |
 | **Les Lions InsurTech** | SaaS & Web Apps | Next.js 16, React 19, Turborepo, Zod, Tailwind | **Funnel Completion Time ÷ 3** & High-intent lead scoring |
 | **[Rolland Assurances](https://github.com/Boulagjame-dev/RA-V2)** | AI & Automation | React, MicroHard AI Swarms, Google Ads API, Python | **Reduced Customer Acquisition Cost (CAC)** & Automated ad testing |
