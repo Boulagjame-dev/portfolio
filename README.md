@@ -164,7 +164,7 @@ zakaria.ai---immersive-portfolio/
 - **GitHub:** [@Boulagjame-dev](https://github.com/Boulagjame-dev)
 - **LinkedIn:** [linkedin.com/in/zakaria-boulagjame](https://www.linkedin.com/in/zakaria-boulagjame/)
 - **Strategy & Efficiency Audit:** [Book a 30-Min Audit](https://calendly.com/boulagjame/30min)
-- **Direct Email:** `boulfaf2013@gmail.com`
+- **Direct Email:** `boulagjame@gmail.com`
 
 ---
 

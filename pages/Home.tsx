@@ -79,7 +79,7 @@ export const Home: React.FC = () => {
 
         const subject = `Strategy Audit Request from ${formData.name}`;
         const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\nBottleneck/Challenge:\n${formData.message}`;
-        const mailtoLink = `mailto:boulfaf2013@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const mailtoLink = `mailto:boulagjame@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
         setTimeout(() => {
             window.location.href = mailtoLink;
@@ -284,7 +284,7 @@ export const Home: React.FC = () => {
                                         <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center border border-white/10 text-lumina-accent shrink-0">
                                             <Mail size={18} />
                                         </div>
-                                        <span className="font-mono text-sm truncate">boulfaf2013@gmail.com</span>
+                                        <span className="font-mono text-sm truncate">boulagjame@gmail.com</span>
                                     </div>
                                 </div>
                             </div>
