@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Database, CreditCard, Cpu, Server, Star, Quote, CheckCircle2 } from 'lucide-react';
 import { CLIENT_TESTIMONIALS } from '../constants';
 import { useLanguage } from '../context/LanguageContext';
@@ -17,15 +17,17 @@ export const Testimonials: React.FC = () => {
         <div className="text-center mb-16">
           <div className="inline-block mb-3 px-3 py-1 border border-lumina-accent/30 rounded-full bg-lumina-accent/5 backdrop-blur">
             <span className="font-mono text-xs text-lumina-accent uppercase tracking-widest font-semibold">
-              {lang === 'fr' ? 'Preuve Sociale & Impact ROI' : 'Client Endorsements & Measured ROI'}
+              {lang === 'fr' ? 'Preuve Sociale & Impact ROI' : lang === 'ru' ? 'Отзывы Клиентов & Измеримый ROI' : 'Client Endorsements & Measured ROI'}
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
-            {lang === 'fr' ? 'Recommandé par Fondateurs & Opérateurs' : 'Trusted by Founders & Operators'}
+            {lang === 'fr' ? 'Recommandé par Fondateurs & Opérateurs' : lang === 'ru' ? 'Доверие Основателей и Бизнеса' : 'Trusted by Founders & Operators'}
           </h2>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto font-light">
             {lang === 'fr' 
               ? 'Des systèmes et architectures délivrant des résultats financiers mesurables.'
+              : lang === 'ru'
+              ? 'Архитектуры и системы, приносящие ощутимый финансовый результат.'
               : 'Production systems engineered for tangible bottom-line impact.'}
           </p>
         </div>
@@ -33,9 +35,9 @@ export const Testimonials: React.FC = () => {
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
           {CLIENT_TESTIMONIALS.map((item) => {
-            const role = lang === 'fr' && item.roleFr ? item.roleFr : item.role;
-            const content = lang === 'fr' && item.contentFr ? item.contentFr : item.content;
-            const highlight = lang === 'fr' && item.highlightFr ? item.highlightFr : item.highlight;
+            const role = lang === 'fr' && item.roleFr ? item.roleFr : lang === 'ru' && item.roleRu ? item.roleRu : item.role;
+            const content = lang === 'fr' && item.contentFr ? item.contentFr : lang === 'ru' && item.contentRu ? item.contentRu : item.content;
+            const highlight = lang === 'fr' && item.highlightFr ? item.highlightFr : lang === 'ru' && item.highlightRu ? item.highlightRu : item.highlight;
 
             return (
               <div
@@ -51,7 +53,7 @@ export const Testimonials: React.FC = () => {
                       ))}
                     </div>
                     <span className="font-mono text-[10px] uppercase tracking-wider text-lumina-accent bg-lumina-accent/10 border border-lumina-accent/20 px-2 py-0.5 rounded">
-                      Verified Client
+                      {lang === 'ru' ? 'Проверенный Клиент' : lang === 'fr' ? 'Client Vérifié' : 'Verified Client'}
                     </span>
                   </div>
 
@@ -85,7 +87,7 @@ export const Testimonials: React.FC = () => {
         {/* Ecosystem Infrastructure Banner */}
         <div className="text-center pt-8 border-t border-white/10">
           <p className="font-mono text-xs text-gray-400 uppercase tracking-[0.2em] mb-8">
-            {lang === 'fr' ? 'Propulsé par les Meilleures Technologies' : 'Powered by Best-in-Class Infrastructure'}
+            {lang === 'fr' ? 'Propulsé par les Meilleures Technologies' : lang === 'ru' ? 'Надежная Технологическая База' : 'Powered by Best-in-Class Infrastructure'}
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 opacity-80 hover:opacity-100 transition-opacity duration-300">

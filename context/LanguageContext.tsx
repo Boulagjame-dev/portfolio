@@ -1,6 +1,6 @@
-﻿import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type Language = 'en' | 'fr';
+export type Language = 'en' | 'fr' | 'ru';
 
 interface LanguageContextType {
   lang: Language;
@@ -17,7 +17,7 @@ const LanguageContext = createContext<LanguageContextType>({
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [lang, setLangState] = useState<Language>(() => {
     const saved = localStorage.getItem('portfolio_lang');
-    return (saved === 'fr' || saved === 'en') ? saved : 'en';
+    return (saved === 'fr' || saved === 'ru' || saved === 'en') ? (saved as Language) : 'en';
   });
 
   const setLang = (newLang: Language) => {
@@ -26,7 +26,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const toggleLang = () => {
-    setLang(lang === 'en' ? 'fr' : 'en');
+    setLang(lang === 'en' ? 'fr' : lang === 'fr' ? 'ru' : 'en');
   };
 
   useEffect(() => {

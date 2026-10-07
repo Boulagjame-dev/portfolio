@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Project } from '../types';
 import { ArrowUpRight, Github, ExternalLink, Image as ImageIcon, TrendingUp } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -11,10 +11,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const { lang } = useLanguage();
   const [imgError, setImgError] = useState(false);
 
-  const title = lang === 'fr' && project.titleFr ? project.titleFr : project.title;
-  const description = lang === 'fr' && project.descriptionFr ? project.descriptionFr : project.description;
-  const businessOutcome = lang === 'fr' && project.businessOutcomeFr ? project.businessOutcomeFr : project.businessOutcome;
-  const category = lang === 'fr' && project.categoryFr ? project.categoryFr : project.category;
+  const title = lang === 'fr' && project.titleFr ? project.titleFr : lang === 'ru' && project.titleRu ? project.titleRu : project.title;
+  const description = lang === 'fr' && project.descriptionFr ? project.descriptionFr : lang === 'ru' && project.descriptionRu ? project.descriptionRu : project.description;
+  const businessOutcome = lang === 'fr' && project.businessOutcomeFr ? project.businessOutcomeFr : lang === 'ru' && project.businessOutcomeRu ? project.businessOutcomeRu : project.businessOutcome;
+  const category = lang === 'fr' && project.categoryFr ? project.categoryFr : lang === 'ru' && project.categoryRu ? project.categoryRu : project.category;
 
   const targetUrl = project.liveUrl || project.repoUrl;
   const hasUrl = !!targetUrl;
@@ -81,7 +81,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             {project.repoUrl && (
               <div
                 className="bg-black/60 backdrop-blur px-2.5 py-2 rounded-full border border-white/20 hover:bg-lumina-accent hover:text-black hover:border-transparent transition-all"
-                title={lang === 'fr' ? "Voir le Code Source" : "View Source Code"}
+                title={lang === 'fr' ? "Voir le Code Source" : lang === 'ru' ? "Исходный код на GitHub" : "View Source Code"}
                 onClick={(e) => {
                   e.stopPropagation();
                   window.open(project.repoUrl, '_blank', 'noopener,noreferrer');
@@ -94,7 +94,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             {project.liveUrl && (
               <div
                 className="bg-lumina-accent/20 backdrop-blur px-2.5 py-2 rounded-full border border-lumina-accent/40 hover:bg-lumina-accent hover:text-black transition-all"
-                title={lang === 'fr' ? "Aperçu en Direct" : "Live Demo"}
+                title={lang === 'fr' ? "Aperçu en Direct" : lang === 'ru' ? "Онлайн Демо" : "Live Demo"}
                 onClick={(e) => {
                   e.stopPropagation();
                   window.open(project.liveUrl, '_blank', 'noopener,noreferrer');

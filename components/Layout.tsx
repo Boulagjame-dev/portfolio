@@ -1,6 +1,6 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Linkedin, Github, Brain, Eye, Menu, X, Globe } from 'lucide-react';
+import { Linkedin, Github, Brain, Eye, Menu, X } from 'lucide-react';
 import { CustomCursor } from './CustomCursor';
 import { useLanguage } from '../context/LanguageContext';
 import Lenis from 'lenis';
@@ -10,7 +10,7 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { lang, toggleLang } = useLanguage();
+  const { lang, setLang } = useLanguage();
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -88,27 +88,34 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         {/* Desktop Links */}
         <div className="flex items-center gap-8 font-display text-sm uppercase tracking-widest hidden md:flex">
           <button onClick={() => handleNavClick('projects')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">
-            {lang === 'fr' ? 'Projets' : 'Work'}
+            {lang === 'fr' ? 'Projets' : lang === 'ru' ? 'Проекты' : 'Work'}
           </button>
           <button onClick={() => handleNavClick('experience')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">
-            {lang === 'fr' ? 'Expertise' : 'Experience'}
+            {lang === 'fr' ? 'Expertise' : lang === 'ru' ? 'Опыт' : 'Experience'}
           </button>
           <button onClick={() => handleNavClick('contact')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">
-            Contact
+            {lang === 'ru' ? 'Контакты' : 'Contact'}
           </button>
         </div>
 
-        {/* Controls: Language Toggle & Socials */}
+        {/* Controls: 3-Way Language Toggle & Socials */}
         <div className="flex items-center gap-3">
-          {/* Bilingual Language Switcher */}
-          <button
-            onClick={toggleLang}
-            title={lang === 'fr' ? "Switch to English" : "Passer en Français"}
-            className="clickable flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-lumina-accent/40 bg-lumina-accent/10 hover:bg-lumina-accent hover:text-black text-lumina-accent font-mono text-xs font-bold transition-all duration-300 shadow-sm"
-          >
-            <Globe size={13} />
-            <span>{lang.toUpperCase()}</span>
-          </button>
+          {/* Segmented [EN | FR | RU] Switcher */}
+          <div className="flex items-center rounded-full border border-lumina-accent/30 bg-black/60 backdrop-blur p-0.5 font-mono text-[11px] font-bold shadow-sm">
+            {(['en', 'fr', 'ru'] as const).map((l) => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={`px-2.5 py-1 rounded-full transition-all duration-200 clickable ${
+                  lang === l
+                    ? 'bg-lumina-accent text-black shadow-[0_0_10px_rgba(163,255,206,0.35)]'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </div>
 
           <a
             href="https://github.com/Boulagjame-dev"
@@ -147,27 +154,34 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             onClick={() => handleNavClick('projects')}
             className="text-2xl font-display uppercase tracking-widest text-white hover:text-lumina-accent transition-colors clickable"
           >
-            {lang === 'fr' ? 'Projets' : 'Work'}
+            {lang === 'fr' ? 'Projets' : lang === 'ru' ? 'Проекты' : 'Work'}
           </button>
           <button
             onClick={() => handleNavClick('experience')}
             className="text-2xl font-display uppercase tracking-widest text-white hover:text-lumina-accent transition-colors clickable"
           >
-            {lang === 'fr' ? 'Expertise' : 'Experience'}
+            {lang === 'fr' ? 'Expertise' : lang === 'ru' ? 'Опыт' : 'Experience'}
           </button>
           <button
             onClick={() => handleNavClick('contact')}
             className="text-2xl font-display uppercase tracking-widest text-white hover:text-lumina-accent transition-colors clickable"
           >
-            Contact
+            {lang === 'ru' ? 'Контакты' : 'Contact'}
           </button>
-          <div className="pt-4 border-t border-white/10 flex gap-4">
-            <button
-              onClick={() => { toggleLang(); setMobileMenuOpen(false); }}
-              className="px-4 py-2 rounded-full border border-lumina-accent text-lumina-accent font-mono text-sm uppercase tracking-wider"
-            >
-              Lang: {lang.toUpperCase()} (Switch)
-            </button>
+          <div className="pt-4 border-t border-white/10 flex items-center gap-2">
+            {(['en', 'fr', 'ru'] as const).map((l) => (
+              <button
+                key={l}
+                onClick={() => { setLang(l); setMobileMenuOpen(false); }}
+                className={`px-3 py-1.5 rounded-full border text-xs font-mono font-bold uppercase transition-all ${
+                  lang === l
+                    ? 'border-lumina-accent bg-lumina-accent text-black'
+                    : 'border-white/20 text-gray-300'
+                }`}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
           </div>
         </div>
       )}
@@ -214,7 +228,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             </a>
           </div>
           <p className="text-gray-500 font-mono text-xs uppercase tracking-widest mt-2">
-            © 2026 Zakaria Boulagjame • {lang === 'fr' ? 'Euphorie Visuelle & Automatisation' : 'Visual Euphoria in Automation'}
+            © 2026 Zakaria Boulagjame • {lang === 'fr' ? 'Euphorie Visuelle & Automatisation' : lang === 'ru' ? 'Визуальная Эйфория & Автоматизация' : 'Visual Euphoria in Automation'}
           </p>
         </div>
       </footer>
