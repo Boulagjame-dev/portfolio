@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type Language = 'en' | 'fr' | 'ru';
+export type Language = 'ru' | 'en' | 'fr';
 
 interface LanguageContextType {
   lang: Language;
@@ -9,24 +9,26 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType>({
-  lang: 'en',
+  lang: 'ru',
   setLang: () => {},
   toggleLang: () => {},
 });
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [lang, setLangState] = useState<Language>(() => {
-    const saved = localStorage.getItem('portfolio_lang');
-    return (saved === 'fr' || saved === 'ru' || saved === 'en') ? (saved as Language) : 'en';
+    // Default to Russian ('ru') as home page language
+    const saved = localStorage.getItem('portfolio_lang_v2') || localStorage.getItem('portfolio_lang');
+    return (saved === 'ru' || saved === 'en' || saved === 'fr') ? (saved as Language) : 'ru';
   });
 
   const setLang = (newLang: Language) => {
     setLangState(newLang);
+    localStorage.setItem('portfolio_lang_v2', newLang);
     localStorage.setItem('portfolio_lang', newLang);
   };
 
   const toggleLang = () => {
-    setLang(lang === 'en' ? 'fr' : lang === 'fr' ? 'ru' : 'en');
+    setLang(lang === 'ru' ? 'en' : lang === 'en' ? 'fr' : 'ru');
   };
 
   useEffect(() => {

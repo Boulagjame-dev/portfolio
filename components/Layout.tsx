@@ -102,7 +102,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="flex items-center gap-3">
           {/* Segmented [EN | FR | RU] Switcher */}
           <div className="flex items-center rounded-full border border-lumina-accent/30 bg-black/60 backdrop-blur p-0.5 font-mono text-[11px] font-bold shadow-sm">
-            {(['en', 'fr', 'ru'] as const).map((l) => (
+            {(['ru', 'en', 'fr'] as const).map((l) => (
               <button
                 key={l}
                 onClick={() => setLang(l)}
@@ -169,7 +169,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             {lang === 'ru' ? 'Контакты' : 'Contact'}
           </button>
           <div className="pt-4 border-t border-white/10 flex items-center gap-2">
-            {(['en', 'fr', 'ru'] as const).map((l) => (
+            {(['ru', 'en', 'fr'] as const).map((l) => (
               <button
                 key={l}
                 onClick={() => { setLang(l); setMobileMenuOpen(false); }}

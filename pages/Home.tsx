@@ -99,28 +99,34 @@ export const Home: React.FC = () => {
                         </span>
                     </div>
 
-                    <h1 className="font-display font-bold text-[8vw] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40 select-none tracking-tighter max-w-6xl mx-auto">
-                        {/* PRECISION */}
-                        <div className="inline-block">
-                            {"PRECISION".split('').map((char, i) => (
-                                <span key={i} className="fantasy-char text-white transition-colors" data-char={char}>{char}</span>
-                            ))}
-                        </div>
-                        <br />
-                        {/* AUTOMATION */}
-                        <div className="inline-block">
-                            {"AUTOMATION".split('').map((char, i) => (
-                                <span key={i} className="fantasy-char text-white transition-colors" data-char={char}>{char}</span>
-                            ))}
-                        </div>
-                        <br />
-                        {/* ARCHITECTURE */}
-                        <div className="inline-block">
-                            {"ARCHITECTURE".split('').map((char, i) => (
-                                <span key={i} className="fantasy-char text-lumina-accent transition-colors" data-char={char}>{char}</span>
-                            ))}
-                        </div>
-                    </h1>
+                    {(() => {
+                        const titleWords = lang === 'fr' 
+                            ? { w1: 'PRÉCISION', w2: 'AUTOMATISATION', w3: 'ARCHITECTURE' }
+                            : lang === 'ru'
+                            ? { w1: 'ТОЧНОСТЬ', w2: 'АВТОМАТИЗАЦИЯ', w3: 'АРХИТЕКТУРА' }
+                            : { w1: 'PRECISION', w2: 'AUTOMATION', w3: 'ARCHITECTURE' };
+                        return (
+                            <h1 className="font-display font-bold text-[8vw] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40 select-none tracking-tighter max-w-6xl mx-auto">
+                                <div className="inline-block">
+                                    {titleWords.w1.split('').map((char, i) => (
+                                        <span key={i} className="fantasy-char text-white transition-colors" data-char={char}>{char}</span>
+                                    ))}
+                                </div>
+                                <br />
+                                <div className="inline-block">
+                                    {titleWords.w2.split('').map((char, i) => (
+                                        <span key={i} className="fantasy-char text-white transition-colors" data-char={char}>{char}</span>
+                                    ))}
+                                </div>
+                                <br />
+                                <div className="inline-block">
+                                    {titleWords.w3.split('').map((char, i) => (
+                                        <span key={i} className="fantasy-char text-lumina-accent transition-colors" data-char={char}>{char}</span>
+                                    ))}
+                                </div>
+                            </h1>
+                        );
+                    })()}
 
                     <p className="max-w-2xl mx-auto mt-12 text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
                         {lang === 'fr' ? INITIAL_PROFILE.taglineFr : lang === 'ru' ? INITIAL_PROFILE.taglineRu : INITIAL_PROFILE.tagline}. {lang === 'fr' 
