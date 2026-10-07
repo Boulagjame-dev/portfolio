@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Ticker } from '../components/Ticker';
 import { ProjectCard } from '../components/ProjectCard';
 import { Testimonials } from '../components/Testimonials';
 import { MOCK_PROJECTS, INITIAL_PROFILE } from '../constants';
 import { Project } from '../types';
-import { Send, Mail, User, MessageSquare, ArrowRight, Calendar } from 'lucide-react';
+import { Send, Mail, ArrowRight, Calendar } from 'lucide-react';
 import { supabase } from '../services/supabase';
 
 export const Home: React.FC = () => {
-    // Start with mock projects, then replace with real data
     const [projects, setProjects] = useState<Project[]>(MOCK_PROJECTS);
+    const [activeCategory, setActiveCategory] = useState<string>('All');
     const location = useLocation();
+
+    const categories = ['All', 'SaaS & Web Apps', 'Retail & POS', 'AI & Automation'];
+    const filteredProjects = activeCategory === 'All'
+        ? projects
+        : projects.filter(p => p.category === activeCategory);
 
     // Contact Form State
     const [formData, setFormData] = useState({
@@ -40,16 +45,16 @@ export const Home: React.FC = () => {
                         tags: item.tags || [],
                         imageUrl: item.image_url,
                         repoUrl: item.repo_url,
+                        liveUrl: item.live_url,
                         caseStudy: item.case_study,
                         videoUrl: item.video_url,
-                        businessOutcome: item.business_outcome // New Field
+                        businessOutcome: item.business_outcome,
+                        category: item.category || 'SaaS & Web Apps'
                     }));
                     setProjects(mappedProjects);
-                } else {
-                    // Keep MOCK_PROJECTS if Supabase is empty
                 }
             } catch (err) {
-                console.error("Supabase fetch failed:", err);
+                console.error("Supabase fetch fallback:", err);
             }
         };
         fetchProjects();
@@ -98,27 +103,27 @@ export const Home: React.FC = () => {
                         {/* PRECISION */}
                         <div className="inline-block">
                             {"PRECISION".split('').map((char, i) => (
-                                <span key={i} className="fantasy-char text-white hover:text-white transition-colors">{char}</span>
+                                <span key={i} className="fantasy-char text-white transition-colors" data-char={char}>{char}</span>
                             ))}
                         </div>
                         <br />
                         {/* AUTOMATION */}
                         <div className="inline-block">
                             {"AUTOMATION".split('').map((char, i) => (
-                                <span key={i} className="fantasy-char text-white hover:text-white transition-colors">{char}</span>
+                                <span key={i} className="fantasy-char text-white transition-colors" data-char={char}>{char}</span>
                             ))}
                         </div>
                         <br />
                         {/* ARCHITECTURE */}
                         <div className="inline-block">
                             {"ARCHITECTURE".split('').map((char, i) => (
-                                <span key={i} className="fantasy-char text-lumina-accent hover:text-lumina-accent transition-colors">{char}</span>
+                                <span key={i} className="fantasy-char text-lumina-accent transition-colors" data-char={char}>{char}</span>
                             ))}
                         </div>
                     </h1>
 
                     <p className="max-w-2xl mx-auto mt-12 text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
-                        {INITIAL_PROFILE.tagline}. Specializing in <span className="text-white font-medium">n8n, Make, & LLMs</span> to engineer self-driving businesses.
+                        {INITIAL_PROFILE.tagline}. Specializing in <span className="text-white font-medium">React, Supabase, n8n, & LLMs</span> to engineer high-velocity platforms and self-driving systems.
                     </p>
 
                     <div className="mt-12 flex flex-col items-center gap-4">
@@ -128,32 +133,53 @@ export const Home: React.FC = () => {
                         >
                             Book a Strategy Audit <ArrowRight className="w-5 h-5" />
                         </button>
-                        <span className="text-gray-500 text-xs uppercase tracking-widest">Limited Availability for Q1 2025</span>
+                        <span className="text-gray-500 text-xs uppercase tracking-widest">Available for Q4 2026 Projects</span>
                     </div>
                 </div>
             </section>
 
             {/* TICKER SECTION */}
             <section className="py-8 bg-black/50 border-t border-b border-white/5">
-                <Ticker text={`• ENGINEERING EFFICIENCY • SCALABLE SYSTEMS • AI AGENTS • REVENUE OPERATIONS •`} />
+                <Ticker text={`• PRODUCTION SAAS • SMART CLOUD POS • AUTONOMOUS WORKFLOWS • MULTI-AGENT SWARMS • REVENUE OPERATIONS • SUPABASE ARCHITECTURE •`} />
             </section>
 
             {/* PROJECTS GRID */}
             <section id="projects" className="max-w-7xl mx-auto px-6 py-32 scroll-mt-20">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 border-b border-white/10 pb-8">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b border-white/10 pb-8">
                     <div>
+                        <div className="inline-block mb-3 px-3 py-1 border border-lumina-accent/30 rounded-full bg-lumina-accent/5 backdrop-blur">
+                            <span className="font-mono text-xs text-lumina-accent uppercase tracking-widest font-semibold">Production Systems</span>
+                        </div>
                         <h2 className="text-5xl md:text-7xl font-display font-bold text-white mb-4">WORK</h2>
-                        <p className="text-xl text-gray-400">Systems deployed for high-growth companies.</p>
+                        <p className="text-xl text-gray-400">Deployed architectures, intelligent POS engines & AI systems.</p>
                     </div>
-                    <div className="hidden md:block">
+                    <div className="flex flex-col md:items-end gap-3">
                         <a href="https://github.com/Boulagjame-dev" target="_blank" rel="noreferrer" className="text-lumina-accent hover:text-white transition-colors flex items-center gap-2 font-mono text-sm uppercase tracking-wider">
-                            View All Code <ArrowRight className="w-4 h-4" />
+                            View All Repositories <ArrowRight className="w-4 h-4" />
                         </a>
+                        <span className="text-xs font-mono text-gray-500">{filteredProjects.length} Projects Loaded</span>
                     </div>
                 </div>
 
+                {/* Filter Pills */}
+                <div className="flex flex-wrap gap-2.5 mb-12">
+                    {categories.map((cat) => (
+                        <button
+                            key={cat}
+                            onClick={() => setActiveCategory(cat)}
+                            className={`px-5 py-2.5 rounded-full font-mono text-xs uppercase tracking-wider transition-all duration-300 clickable ${
+                                activeCategory === cat
+                                    ? 'bg-lumina-accent text-black font-bold shadow-[0_0_20px_rgba(163,255,206,0.35)] scale-105'
+                                    : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/10'
+                            }`}
+                        >
+                            {cat}
+                        </button>
+                    ))}
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projects.map((project) => (
+                    {filteredProjects.map((project) => (
                         <ProjectCard key={project.id} project={project} />
                     ))}
                 </div>
@@ -177,35 +203,39 @@ export const Home: React.FC = () => {
 
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-left mt-16 p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/5">
                         <div className="p-4 border-l-2 border-lumina-accent/20">
-                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">Orchestration</h4>
+                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">Web Apps & SaaS</h4>
+                            <ul className="text-gray-400 space-y-2 text-sm font-medium">
+                                <li>React 19 / Next.js 16</li>
+                                <li>Turborepo / Vite</li>
+                                <li>Tailwind / Glassmorphism</li>
+                                <li>Local SEO & Schema.org</li>
+                            </ul>
+                        </div>
+                        <div className="p-4 border-l-2 border-lumina-accent/20">
+                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">Databases & Ops</h4>
+                            <ul className="text-gray-400 space-y-2 text-sm font-medium">
+                                <li>PostgreSQL / Supabase</li>
+                                <li>Row-Level Security (RLS)</li>
+                                <li>Multi-tenant Isolation</li>
+                                <li>POS Hardware & Webhooks</li>
+                            </ul>
+                        </div>
+                        <div className="p-4 border-l-2 border-lumina-accent/20">
+                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">Automation & Bots</h4>
                             <ul className="text-gray-400 space-y-2 text-sm font-medium">
                                 <li>n8n (Self-hosted)</li>
-                                <li>Make.com</li>
-                                <li>LangChain</li>
+                                <li>Telegram Bot APIs</li>
+                                <li>Headless Edge Studio</li>
+                                <li>Printify & Etsy APIs</li>
                             </ul>
                         </div>
                         <div className="p-4 border-l-2 border-lumina-accent/20">
-                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">Development</h4>
+                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">AI Intelligence</h4>
                             <ul className="text-gray-400 space-y-2 text-sm font-medium">
-                                <li>Python / FastAPI</li>
-                                <li>TypeScript / React</li>
-                                <li>PostgreSQL / Supabase</li>
-                            </ul>
-                        </div>
-                        <div className="p-4 border-l-2 border-lumina-accent/20">
-                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">Intelligence</h4>
-                            <ul className="text-gray-400 space-y-2 text-sm font-medium">
-                                <li>Gemini 2.0 Flash</li>
-                                <li>GPT-4o</li>
-                                <li>RAG Pipelines</li>
-                            </ul>
-                        </div>
-                        <div className="p-4 border-l-2 border-lumina-accent/20">
-                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">Impact</h4>
-                            <ul className="text-gray-400 space-y-2 text-sm font-medium">
-                                <li>Lead Gen Automation</li>
-                                <li>CRM Synchronization</li>
-                                <li>Inventory Intelligence</li>
+                                <li>Gemini Pro & Vision OCR</li>
+                                <li>Autonomous Agent Swarms</li>
+                                <li>MicroHard CAI/MGI</li>
+                                <li>RAG & Lead Scoring</li>
                             </ul>
                         </div>
                     </div>
@@ -254,7 +284,7 @@ export const Home: React.FC = () => {
                                         <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center border border-white/10 text-lumina-accent shrink-0">
                                             <Mail size={18} />
                                         </div>
-                                        <span className="font-mono text-sm truncate">zakaria.boulagjame@arkx.academy</span>
+                                        <span className="font-mono text-sm truncate">boulfaf2013@gmail.com</span>
                                     </div>
                                 </div>
                             </div>

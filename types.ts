@@ -1,4 +1,4 @@
-export interface Project {
+﻿export interface Project {
   id: string;
   title: string;
   description: string;
@@ -7,7 +7,9 @@ export interface Project {
   videoUrl?: string;
   caseStudy?: string;
   repoUrl?: string;
+  liveUrl?: string;
   businessOutcome?: string; // New field for ROI/Impact
+  category?: 'All' | 'SaaS & Web Apps' | 'AI & Automation' | 'Retail & POS';
 }
 
 export interface UserProfile {
