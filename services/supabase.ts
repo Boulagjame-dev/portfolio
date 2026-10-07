@@ -1,6 +1,17 @@
-import { createClient } from '@supabase/supabase-js';
+﻿import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://acoarlacbeoqoaodnykf.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFjb2FybGFjYmVvcW9hb2RueWtmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MDA3OTYsImV4cCI6MjA3OTQ3Njc5Nn0.B8HY_CQsQHdBylF8tueyhNhFmMSJWbNel0LfDKBWMn8'.trim();
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey);
+
+export const supabase = isSupabaseConfigured
+  ? createClient(supabaseUrl, supabaseKey)
+  : ({
+      from: () => ({
+        select: () => Promise.resolve({ data: null, error: null }),
+        insert: () => Promise.resolve({ data: null, error: null }),
+        update: () => Promise.resolve({ data: null, error: null }),
+        delete: () => Promise.resolve({ data: null, error: null }),
+      }),
+    } as any);

@@ -1,10 +1,13 @@
-﻿import { UserProfile, Project } from './types';
+﻿import { UserProfile, Project, TestimonialItem } from './types';
 
 export const INITIAL_PROFILE: UserProfile = {
   name: "Zakaria Boulagjame",
   title: "AI Workflow & Full-Stack Systems Architect",
+  titleFr: "Architecte Systèmes Full-Stack & Automatisation IA",
   tagline: "From Scientific Rigor to Business Scalability",
+  taglineFr: "De la Rigueur Scientifique à la Scalabilité Opérationnelle",
   bio: "I apply the laws of physics to business logic: Efficiency is mandatory. Friction is eliminated. I engineer high-performance web platforms, smart POS architectures, and autonomous agentic workflows using React, TypeScript, Python, n8n, Supabase, and LLMs.",
+  bioFr: "J'applique les lois de la physique à la logique d'entreprise : l'efficacité est obligatoire, la friction est éliminée. Je conçois des plateformes web scalables, des architectures de caisse intelligentes et des workflows IA autonomes avec React, TypeScript, Python, n8n, Supabase et LLMs.",
   linkedInUrl: "https://www.linkedin.com/in/zakaria-boulagjame/",
   avatarUrl: "https://github.com/Boulagjame-dev.png"
 };
@@ -13,108 +16,188 @@ export const MOCK_PROJECTS: Project[] = [
   {
     id: 'cecot-pos',
     title: "CECOT-POS System",
+    titleFr: "Système CECOT-POS",
     category: 'Retail & POS',
     description: "Cloud Point of Sale & Inventory engine with live smartphone camera barcode pairing. Features instant Z-closure cash reporting, quote generation, and Supabase real-time synchronization.",
+    descriptionFr: "Moteur de caisse cloud et gestion de stocks avec appairage caméra smartphone en direct. Intègre clôtures de caisse (Z), génération de devis et synchronisation temps réel Supabase.",
     tags: ["React 18", "Supabase", "Tailwind CSS", "HTML5 QR/Barcode", "Webhooks"],
     imageUrl: "/projects/cecot-pos.jpg",
     repoUrl: "https://github.com/Boulagjame-dev/CECOT-POS",
     businessOutcome: "0 Cash Discrepancy & 12h/week saved in stock auditing",
-    caseStudy: "Eliminated dedicated barcode scanner hardware with zero-install smartphone camera pairing and automated stock level alerts."
+    businessOutcomeFr: "0 Écart de Caisse & 12h/semaine économisées sur les stocks",
+    caseStudy: "Eliminated dedicated barcode scanner hardware with zero-install smartphone camera pairing and automated stock level alerts.",
+    caseStudyFr: "Élimination des terminaux coûteux grâce à l'appairage direct smartphone et notifications de seuils d'inventaire."
   },
   {
     id: 'cecot-vitrine',
     title: "CECOT Vitrine & Local GEO",
+    titleFr: "CECOT Vitrine & Moteur GEO",
     category: 'SaaS & Web Apps',
     description: "High-performance web vitrine and lead acquisition engine for Morocco's premier reprography hub. Structured Schema.org JSON-LD for Google AI Overviews (GEO), 76+ live products catalogue, and large-format architectural print calculator.",
+    descriptionFr: "Site vitrine haute performance et acquisition de leads pour centre de reprographie à Casablanca. Schema.org JSON-LD pour Google AI Overviews (GEO), catalogue 76+ articles et calculateur de tirages architecturaux A0/A1.",
     tags: ["Vanilla JS", "Node.js", "SEO / GEO", "Schema.org", "Tailwind CSS"],
     imageUrl: "/projects/cecot-vitrine.jpg",
     repoUrl: "https://github.com/Boulagjame-dev/cecot-vitrine",
+    liveUrl: "https://github.com/Boulagjame-dev/cecot-vitrine",
     businessOutcome: "+85% Local visibility & Automated architectural quote intake",
-    caseStudy: "Deployed optimized semantic structure and localized schema graph to dominate local search rankings and automate B2B print orders."
+    businessOutcomeFr: "+85% Visibilité locale & Qualification automatique des devis plans",
+    caseStudy: "Deployed optimized semantic structure and localized schema graph to dominate local search rankings and automate B2B print orders.",
+    caseStudyFr: "Structure sémantique ultra-rapide et balisage Schema.org géolocalisé pour dominer les requêtes locales et capter les commandes B2B."
   },
   {
     id: 'fofinette-pos',
     title: "Fofinette POS & AI Suite",
+    titleFr: "Fofinette POS & Suite IA",
     category: 'AI & Automation',
     description: "Smart retail & culinary POS connected to an autonomous n8n backend: automated invoice OCR extraction (Gemini Vision), real-time Telegram sales telemetry, and instant stock threshold alerts.",
+    descriptionFr: "Caisse tactile connectée à un backend d'automatisation n8n : extraction OCR IA des factures fournisseurs (Gemini Vision), alertes ventes et stocks critiques sur Telegram.",
     tags: ["React", "Supabase", "n8n", "Gemini Vision", "Telegram Bot API"],
     imageUrl: "/projects/fofinette.jpeg",
     repoUrl: "https://github.com/Boulagjame-dev/fofinette-pos",
     businessOutcome: "10x Faster supplier invoice intake & Real-time financial alerts",
-    caseStudy: "Eliminated manual accounting overhead with automated multi-modal invoice digitization and real-time Telegram notifications."
+    businessOutcomeFr: "Traitement factures 10x plus rapide & Télémesure financière en direct",
+    caseStudy: "Eliminated manual accounting overhead with automated multi-modal invoice digitization and real-time Telegram notifications.",
+    caseStudyFr: "Suppression totale de la saisie comptable manuelle grâce à l'OCR IA multimodal couplé aux webhooks Telegram."
   },
   {
     id: 'coop-saas',
     title: "Coop-SaaS Maroc (Loi 112-12)",
+    titleFr: "Coop-SaaS Maroc (Loi 112-12)",
     category: 'SaaS & Web Apps',
     description: "Multi-tenant B2B governance and financial compliance system engineered for Moroccan cooperatives under Law 112-12 (ODCO / INDH). Complete RBAC matrix with PostgreSQL Row-Level Security.",
+    descriptionFr: "Solution SaaS B2B multi-tenant de gouvernance et conformité légale pour coopératives marocaines (Loi 112-12 / ODCO / INDH). Matrice RBAC stricte et Row-Level Security PostgreSQL.",
     tags: ["PostgreSQL", "Supabase RLS", "Multi-tenancy", "TypeScript", "Tailwind CSS"],
     imageUrl: "/projects/coop-saas.jpg",
     businessOutcome: "100% Legal ODCO compliance & Full INDH subsidy traceability",
-    caseStudy: "Engineered strict tenant isolation and automated generation of mandatory statutory registers and member voting protocols."
+    businessOutcomeFr: "100% Conformité statutaire ODCO & Traçabilité complète INDH",
+    caseStudy: "Engineered strict tenant isolation and automated generation of mandatory statutory registers and member voting protocols.",
+    caseStudyFr: "Isolation étanche des données par coopérative avec génération automatique des registres légaux obligatoires."
   },
   {
     id: 'leslions',
     title: "Les Lions — InsurTech Comparator",
+    titleFr: "Les Lions — Comparateur InsurTech",
     category: 'SaaS & Web Apps',
     description: "B2C insurance comparison and qualification engine. Guided conversion flow powered by mascots Léo & Léa, dynamic provider rating calculation, and real-time broker partner API routing.",
+    descriptionFr: "Plateforme B2C de comparaison d'assurances sur-mesure. Tunnel conversationnel guidé par les mascottes Léo & Léa, moteur de tarification dynamique et intégration d'APIs courtiers.",
     tags: ["Next.js 16", "React 19", "Turborepo", "TypeScript", "Zod", "Tailwind CSS"],
     imageUrl: "/projects/leslions.png",
     businessOutcome: "65% Faster funnel completion & High-intent lead generation",
-    caseStudy: "Constructed an ultra-fast monorepo architecture with Zod schema verification and interactive insurance quoting workflows."
+    businessOutcomeFr: "Tunnel 65% plus rapide & Qualification de leads haute valeur",
+    caseStudy: "Constructed an ultra-fast monorepo architecture with Zod schema verification and interactive insurance quoting workflows.",
+    caseStudyFr: "Monorepo haute performance avec validation Zod rigoureuse et tunnels de tarification multi-compagnies."
   },
   {
     id: 'rolland-assurances',
     title: "Rolland Assurances Hub",
+    titleFr: "Écosystème Rolland Assurances",
     category: 'AI & Automation',
     description: "Digital brokerage portal combined with an autonomous multi-agent marketing machine (MicroHard CAI/MGI framework). Automates Google Ads campaign iteration, compliance checking, and senior health quotes.",
+    descriptionFr: "Portail digital de courtage combiné à une architecture multi-agents IA (framework MicroHard CAI/MGI) pour automatiser les campagnes Google Ads et les devis santé senior.",
     tags: ["React", "MicroHard AI", "Google Ads API", "Workflow Automation", "Tailwind CSS"],
     imageUrl: "/projects/rolland-assurances.svg",
     repoUrl: "https://github.com/Boulagjame-dev/RA-V2",
     businessOutcome: "Lower customer acquisition cost & Hands-free ad optimization",
-    caseStudy: "Deployed autonomous AI agent swarms to continuously craft, test, and optimize acquisition hooks for insurance products."
+    businessOutcomeFr: "Réduction du coût d'acquisition client & Optimisation publicitaire 24/7",
+    caseStudy: "Deployed autonomous AI agent swarms to continuously craft, test, and optimize acquisition hooks for insurance products.",
+    caseStudyFr: "Déploiement d'agents IA autonomes pour générer et tester des accroches marketing tout en respectant la conformité."
   },
   {
     id: 'etsy-pod',
     title: "Etsy Merch Factory (Zero API Cost)",
+    titleFr: "Usine E-commerce Print-on-Demand",
     category: 'AI & Automation',
     description: "Autonomous Print-on-Demand pipeline. Generates 4500x5400px transparent merchandise designs via headless Edge vector rendering, synced directly to Printify API and Etsy store through n8n.",
+    descriptionFr: "Pipeline e-commerce Print-on-Demand autonome. Rendu vectoriel headless sous Edge (PNG 4500x5400px transparent natif), synchronisé avec l'API Printify et boutique Etsy via n8n.",
     tags: ["PowerShell", "Headless Edge", "Printify API", "Etsy API", "n8n"],
     imageUrl: "/projects/etsy-pod.jpg",
     businessOutcome: "$0 Design generation API cost & 100% Hands-off merchandise sync",
-    caseStudy: "Engineered headless browser rendering system delivering pixel-perfect typographic apparel without unpredictable AI image API costs."
+    businessOutcomeFr: "0$ de coût d'API image & Mise en vente 100% automatisée",
+    caseStudy: "Engineered headless browser rendering system delivering pixel-perfect typographic apparel without unpredictable AI image API costs.",
+    caseStudyFr: "Remplacement des modèles d'images IA instables par un moteur de rendu vectoriel HTML/CSS ultra-précis."
   },
   {
     id: 'mymentor',
     title: "MyMentor OS",
+    titleFr: "MyMentor OS",
     category: 'AI & Automation',
     description: "Adaptive AI learning platform automating 100% of user onboarding and dynamic curriculum generation. Scalable architecture for real-time personalized learning paths.",
+    descriptionFr: "Plateforme d'apprentissage adaptatif automatisant 100% de l'onboarding et de la génération de parcours personnalisés en temps réel avec l'IA.",
     tags: ["React", "TypeScript", "Google Gemini API", "Supabase", "Tailwind CSS"],
     imageUrl: "https://placehold.co/800x600/120b2e/a3ffce?text=MyMentor+OS&font=montserrat",
     repoUrl: "https://github.com/Boulagjame-dev/MyMentor",
     businessOutcome: "+40% Student engagement & Fully automated curriculum scaling",
-    caseStudy: "Designed dynamic learning paths and automated evaluation mechanisms powered by Gemini API and Supabase real-time data."
+    businessOutcomeFr: "+40% d'engagement apprenant & Génération de cours 100% automatisée",
+    caseStudy: "Designed dynamic learning paths and automated evaluation mechanisms powered by Gemini API and Supabase real-time data.",
+    caseStudyFr: "Conception de parcours dynamiques et d'évaluation continue propulsés par l'API Gemini et Supabase."
   },
   {
     id: 'modjex',
     title: "Modjex Smart Inventory",
+    titleFr: "Modjex Smart Inventory",
     category: 'Retail & POS',
     description: "Real-time margin analysis and inventory intelligence dashboard. Replaced error-prone spreadsheets with automated CSV parsing and LLM catalog sanitization.",
+    descriptionFr: "Tableau de bord de suivi des marges et valorisation des stocks en temps réel. Remplace les tableurs manuels par le parsing CSV automatisé et l'enrichissement par LLM.",
     tags: ["React", "Data Visualization", "CSV Parsing", "Gemini API"],
     imageUrl: "https://placehold.co/800x600/120b2e/a3ffce?text=MODJEX&font=montserrat",
     repoUrl: "https://github.com/Boulagjame-dev/Modjex-Site",
     businessOutcome: "15+ Hours saved weekly & Total elimination of inventory mismatch",
-    caseStudy: "Integrated automated catalog ingestion and LLM-driven classification to unify multi-source retail supplies."
+    businessOutcomeFr: "15+ heures économisées par semaine & Zéro écart de catalogue",
+    caseStudy: "Integrated automated catalog ingestion and LLM-driven classification to unify multi-source retail supplies.",
+    caseStudyFr: "Ingestion automatique de catalogues complexes et catégorisation assistée par IA."
   },
   {
     id: 'bizcard',
     title: "BizCard AI",
+    titleFr: "BizCard AI",
     category: 'AI & Automation',
     description: "99% Precision batch lead extraction system. Transforms physical business cards into CRM-ready assets in seconds using Gemini Pro Vision.",
+    descriptionFr: "Pipeline d'extraction de leads à 99% de précision à partir de cartes de visite physiques par lot via Gemini Pro Vision et synchronisation CRM.",
     tags: ["React (TypeScript)", "Supabase", "Gemini Vision", "Tailwind CSS"],
     imageUrl: "https://placehold.co/800x600/120b2e/a3ffce?text=BizCard+AI&font=montserrat",
     repoUrl: "https://github.com/Boulagjame-dev/bizcard-batch",
     businessOutcome: "99% Extraction accuracy & Zero manual CRM data entry",
-    caseStudy: "Leveraged multi-modal Gemini Vision to extract complex typography, corporate domains, and multilingual card data directly into CRM."
+    businessOutcomeFr: "99% de précision OCR & Zéro saisie manuelle dans le CRM",
+    caseStudy: "Leveraged multi-modal Gemini Vision to extract complex typography, corporate domains, and multilingual card data directly into CRM.",
+    caseStudyFr: "Extraction fidèle de typographies complexes et formatage automatique pour import CRM instantané."
+  }
+];
+
+export const CLIENT_TESTIMONIALS: TestimonialItem[] = [
+  {
+    id: 'rolland',
+    author: "N. Rolland",
+    role: "Founder & Managing Broker",
+    roleFr: "Dirigeant Fondateur",
+    company: "Rolland Assurances",
+    content: "Zakaria engineered our digital brokerage platform and automated our lead acquisition loops with remarkable rigor. Our acquisition cost per qualified senior health lead dropped by 38% while maintaining total compliance.",
+    contentFr: "Zakaria a conçu notre portail de courtage et automatisé nos boucles d'acquisition avec une rigueur exemplaire. Notre coût par prospect senior qualifié a baissé de 38% tout en garantissant une conformité totale.",
+    rating: 5,
+    highlight: "-38% Acquisition Cost & High-Intent Leads",
+    highlightFr: "-38% Coût d'Acquisition & Leads Hautement Qualifiés"
+  },
+  {
+    id: 'cecot',
+    author: "Direction CECOT",
+    role: "Operations & Retail Hub",
+    roleFr: "Direction des Opérations",
+    company: "CECOT Casablanca",
+    content: "The CECOT-POS system and local GEO optimization delivered immediate ROI. Being able to pair our phone cameras as instant barcode scanners saved us hundreds in hardware and saves our staff over 12 hours every week.",
+    contentFr: "CECOT-POS et l'optimisation GEO locale ont généré un retour sur investissement immédiat. Pouvoir appairer nos smartphones en lecteur code-barres a évité des terminaux coûteux et nous fait gagner plus de 12 heures chaque semaine.",
+    rating: 5,
+    highlight: "0 Cash Error & 12h+ Saved Every Week",
+    highlightFr: "0 Écart de Caisse & +12h Gagnées par Semaine"
+  },
+  {
+    id: 'fofinette',
+    author: "S. Bennani",
+    role: "Culinary Operations Lead",
+    roleFr: "Responsable d'Exploitation",
+    company: "Fofinette Gourmandises",
+    content: "The automated n8n OCR invoice processing and instant Telegram alerts have completely removed our administrative bottlenecks. Invoices are parsed into Supabase in seconds with zero manual data entry.",
+    contentFr: "L'OCR automatique des factures via n8n et les alertes Telegram instantanées ont totalement débloqué notre gestion. Les factures sont intégrées dans Supabase en quelques secondes sans aucune ressaisie manuelle.",
+    rating: 5,
+    highlight: "10x Faster Ingestion & Real-Time Telemetry",
+    highlightFr: "Traitement 10x Plus Rapide & Visibilité Temps Réel"
   }
 ];

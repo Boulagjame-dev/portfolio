@@ -1,8 +1,8 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Linkedin, Github, Brain, Eye, Menu, X } from 'lucide-react';
+import { Linkedin, Github, Brain, Eye, Menu, X, Globe } from 'lucide-react';
 import { CustomCursor } from './CustomCursor';
-import { supabase } from '../services/supabase';
+import { useLanguage } from '../context/LanguageContext';
 import Lenis from 'lenis';
 
 interface LayoutProps {
@@ -10,23 +10,12 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const { lang, toggleLang } = useLanguage();
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Connection check without noisy console errors
-  useEffect(() => {
-    const checkConnection = async () => {
-      try {
-        await supabase.from('projects').select('id').limit(1);
-      } catch {
-        // Silent fallback to local production data
-      }
-    };
-    checkConnection();
-  }, []);
-
-  // Hidden Admin Access
+  // Hidden Admin Access in Dev Mode
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'l') {
@@ -81,7 +70,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col relative cursor-none">
+    <div className="min-h-screen flex flex-col relative cursor-none bg-lumina-bg text-lumina-text font-sans">
       <CustomCursor />
 
       {/* Navbar */}
@@ -98,13 +87,29 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
 
         {/* Desktop Links */}
         <div className="flex items-center gap-8 font-display text-sm uppercase tracking-widest hidden md:flex">
-          <button onClick={() => handleNavClick('projects')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">Work</button>
-          <button onClick={() => handleNavClick('experience')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">Experience</button>
-          <button onClick={() => handleNavClick('contact')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">Contact</button>
+          <button onClick={() => handleNavClick('projects')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">
+            {lang === 'fr' ? 'Projets' : 'Work'}
+          </button>
+          <button onClick={() => handleNavClick('experience')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">
+            {lang === 'fr' ? 'Expertise' : 'Experience'}
+          </button>
+          <button onClick={() => handleNavClick('contact')} className="hover:text-lumina-accent transition-colors clickable bg-transparent border-none p-0 cursor-none">
+            Contact
+          </button>
         </div>
 
-        {/* Social Icons & Mobile Toggle */}
+        {/* Controls: Language Toggle & Socials */}
         <div className="flex items-center gap-3">
+          {/* Bilingual Language Switcher */}
+          <button
+            onClick={toggleLang}
+            title={lang === 'fr' ? "Switch to English" : "Passer en Français"}
+            className="clickable flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-lumina-accent/40 bg-lumina-accent/10 hover:bg-lumina-accent hover:text-black text-lumina-accent font-mono text-xs font-bold transition-all duration-300 shadow-sm"
+          >
+            <Globe size={13} />
+            <span>{lang.toUpperCase()}</span>
+          </button>
+
           <a
             href="https://github.com/Boulagjame-dev"
             target="_blank"
@@ -142,13 +147,13 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             onClick={() => handleNavClick('projects')}
             className="text-2xl font-display uppercase tracking-widest text-white hover:text-lumina-accent transition-colors clickable"
           >
-            Work
+            {lang === 'fr' ? 'Projets' : 'Work'}
           </button>
           <button
             onClick={() => handleNavClick('experience')}
             className="text-2xl font-display uppercase tracking-widest text-white hover:text-lumina-accent transition-colors clickable"
           >
-            Experience
+            {lang === 'fr' ? 'Expertise' : 'Experience'}
           </button>
           <button
             onClick={() => handleNavClick('contact')}
@@ -156,10 +161,18 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
           >
             Contact
           </button>
+          <div className="pt-4 border-t border-white/10 flex gap-4">
+            <button
+              onClick={() => { toggleLang(); setMobileMenuOpen(false); }}
+              className="px-4 py-2 rounded-full border border-lumina-accent text-lumina-accent font-mono text-sm uppercase tracking-wider"
+            >
+              Lang: {lang.toUpperCase()} (Switch)
+            </button>
+          </div>
         </div>
       )}
 
-      {/* Background Elements */}
+      {/* Background Ambient Glow Elements */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-purple-900/20 rounded-full blur-[120px] animate-float" />
         <div className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-blue-900/20 rounded-full blur-[120px] animate-float" style={{ animationDelay: '2s' }} />
@@ -201,7 +214,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             </a>
           </div>
           <p className="text-gray-500 font-mono text-xs uppercase tracking-widest mt-2">
-            © 2026 Zakaria Boulagjame • Visual Euphoria in Automation
+            © 2026 Zakaria Boulagjame • {lang === 'fr' ? 'Euphorie Visuelle & Automatisation' : 'Visual Euphoria in Automation'}
           </p>
         </div>
       </footer>

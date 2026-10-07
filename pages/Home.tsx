@@ -5,15 +5,23 @@ import { ProjectCard } from '../components/ProjectCard';
 import { Testimonials } from '../components/Testimonials';
 import { MOCK_PROJECTS, INITIAL_PROFILE } from '../constants';
 import { Project } from '../types';
-import { Send, Mail, ArrowRight, Calendar, CheckCircle } from 'lucide-react';
-import { supabase } from '../services/supabase';
+import { Send, Mail, ArrowRight, Calendar, CheckCircle, FileText, Download } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { supabase, isSupabaseConfigured } from '../services/supabase';
 
 export const Home: React.FC = () => {
+    const { lang } = useLanguage();
     const [projects, setProjects] = useState<Project[]>(MOCK_PROJECTS);
     const [activeCategory, setActiveCategory] = useState<string>('All');
     const location = useLocation();
 
-    const categories = ['All', 'SaaS & Web Apps', 'Retail & POS', 'AI & Automation'];
+    const categories = [
+        { id: 'All', labelEn: 'All', labelFr: 'Tous' },
+        { id: 'SaaS & Web Apps', labelEn: 'SaaS & Web Apps', labelFr: 'SaaS & Web Apps' },
+        { id: 'Retail & POS', labelEn: 'Retail & POS', labelFr: 'Commerce & POS' },
+        { id: 'AI & Automation', labelEn: 'AI & Automation', labelFr: 'IA & Automatisation' }
+    ];
+
     const filteredProjects = activeCategory === 'All'
         ? projects
         : projects.filter(p => p.category === activeCategory);
@@ -27,8 +35,9 @@ export const Home: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSent, setIsSent] = useState(false);
 
-    // Fetch from Supabase with LocalStorage Fallback
+    // Fetch from Supabase if configured with silent fallback
     useEffect(() => {
+        if (!isSupabaseConfigured) return;
         const fetchProjects = async () => {
             try {
                 const { data, error } = await supabase
@@ -42,20 +51,24 @@ export const Home: React.FC = () => {
                     const mappedProjects: Project[] = data.map((item: any) => ({
                         id: item.id,
                         title: item.title,
+                        titleFr: item.title_fr,
                         description: item.description,
+                        descriptionFr: item.description_fr,
                         tags: item.tags || [],
                         imageUrl: item.image_url,
                         repoUrl: item.repo_url,
                         liveUrl: item.live_url,
                         caseStudy: item.case_study,
+                        caseStudyFr: item.case_study_fr,
                         videoUrl: item.video_url,
                         businessOutcome: item.business_outcome,
+                        businessOutcomeFr: item.business_outcome_fr,
                         category: item.category || 'SaaS & Web Apps'
                     }));
                     setProjects(mappedProjects);
                 }
-            } catch (err) {
-                console.error("Supabase fetch fallback:", err);
+            } catch {
+                // Keep local MOCK_PROJECTS fallback silently
             }
         };
         fetchProjects();
@@ -85,8 +98,8 @@ export const Home: React.FC = () => {
         setTimeout(() => {
             window.location.href = mailtoLink;
             setIsSubmitting(false);
-            setFormData({ name: '', email: '', message: '' });
             setIsSent(true);
+            setFormData({ name: '', email: '', message: '' });
             setTimeout(() => setIsSent(false), 8000);
         }, 400);
     };
@@ -94,11 +107,13 @@ export const Home: React.FC = () => {
     return (
         <div className="pb-0">
             {/* HERO SECTION */}
-            <section className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden pt-20">
+            <section className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden pt-24">
 
                 <div className="text-center z-10 px-4">
                     <div className="inline-block mb-8 px-4 py-2 border border-lumina-accent/30 rounded-full bg-lumina-accent/5 backdrop-blur clickable transition-transform hover:scale-105">
-                        <span className="font-mono text-xs text-lumina-accent uppercase tracking-[0.2em] font-bold">Systematize Your Growth</span>
+                        <span className="font-mono text-xs text-lumina-accent uppercase tracking-[0.2em] font-bold">
+                            {lang === 'fr' ? 'Systématisez Votre Croissance' : 'Systematize Your Growth'}
+                        </span>
                     </div>
 
                     <h1 className="font-display font-bold text-[8vw] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40 select-none tracking-tighter max-w-6xl mx-auto">
@@ -125,24 +140,46 @@ export const Home: React.FC = () => {
                     </h1>
 
                     <p className="max-w-2xl mx-auto mt-12 text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
-                        {INITIAL_PROFILE.tagline}. Specializing in <span className="text-white font-medium">React, Supabase, n8n, & LLMs</span> to engineer high-velocity platforms and self-driving systems.
+                        {lang === 'fr' ? INITIAL_PROFILE.taglineFr : INITIAL_PROFILE.tagline}. {lang === 'fr' 
+                            ? <span>Spécialisé en <span className="text-white font-medium">React, Supabase, n8n, & LLMs</span> pour concevoir des systèmes agiles et des entreprises autonomes.</span>
+                            : <span>Specializing in <span className="text-white font-medium">React, Supabase, n8n, & LLMs</span> to engineer high-velocity platforms and self-driving systems.</span>}
                     </p>
 
-                    <div className="mt-12 flex flex-col items-center gap-4">
+                    {/* CTAs: Strategy Audit + Download Resume */}
+                    <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
                         <button
                             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="bg-lumina-accent text-black font-bold text-lg px-8 py-4 rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(163,255,206,0.3)] flex items-center gap-2 clickable"
+                            className="bg-lumina-accent text-black font-bold text-base md:text-lg px-8 py-4 rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-[0_0_25px_rgba(163,255,206,0.35)] flex items-center gap-2 clickable"
                         >
-                            Book a Strategy Audit <ArrowRight className="w-5 h-5" />
+                            {lang === 'fr' ? 'Réserver un Audit Stratégique' : 'Book a Strategy Audit'} 
+                            <ArrowRight className="w-5 h-5" />
                         </button>
-                        <span className="text-gray-500 text-xs uppercase tracking-widest">Available for Q4 2026 Projects</span>
+
+                        <a
+                            href="/cv-zakaria-boulagjame.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="border border-white/20 bg-white/5 hover:bg-white/10 hover:border-lumina-accent/50 text-white font-mono text-sm px-7 py-4 rounded-full transition-all duration-300 flex items-center gap-2.5 clickable backdrop-blur-sm"
+                        >
+                            <Download className="w-4 h-4 text-lumina-accent" />
+                            <span>{lang === 'fr' ? 'Télécharger CV' : 'Download Resume (CV)'}</span>
+                        </a>
+                    </div>
+
+                    <div className="mt-4">
+                        <span className="text-gray-500 text-xs uppercase tracking-widest font-mono">
+                            {lang === 'fr' ? 'Disponible pour Projets Q4 2026' : 'Available for Q4 2026 Projects'}
+                        </span>
                     </div>
                 </div>
             </section>
 
             {/* TICKER SECTION */}
             <section className="py-8 bg-black/50 border-t border-b border-white/5">
-                <Ticker text={`• PRODUCTION SAAS • SMART CLOUD POS • AUTONOMOUS WORKFLOWS • MULTI-AGENT SWARMS • REVENUE OPERATIONS • SUPABASE ARCHITECTURE •`} />
+                <Ticker text={lang === 'fr'
+                    ? `• SAAS DE PRODUCTION • CAISSE CLOUD INTELLIGENTE • WORKFLOWS AUTONOMES • AGENTS IA MULTI-RÔLES • OPÉRATIONS DE REVENU • ARCHITECTURE SUPABASE •`
+                    : `• PRODUCTION SAAS • SMART CLOUD POS • AUTONOMOUS WORKFLOWS • MULTI-AGENT SWARMS • REVENUE OPERATIONS • SUPABASE ARCHITECTURE •`
+                } />
             </section>
 
             {/* PROJECTS GRID */}
@@ -150,34 +187,47 @@ export const Home: React.FC = () => {
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 border-b border-white/10 pb-8">
                     <div>
                         <div className="inline-block mb-3 px-3 py-1 border border-lumina-accent/30 rounded-full bg-lumina-accent/5 backdrop-blur">
-                            <span className="font-mono text-xs text-lumina-accent uppercase tracking-widest font-semibold">Production Systems</span>
+                            <span className="font-mono text-xs text-lumina-accent uppercase tracking-widest font-semibold">
+                                {lang === 'fr' ? 'Systèmes en Production' : 'Production Systems'}
+                            </span>
                         </div>
-                        <h2 className="text-5xl md:text-7xl font-display font-bold text-white mb-4">WORK</h2>
-                        <p className="text-xl text-gray-400">Deployed architectures, intelligent POS engines & AI systems.</p>
+                        <h2 className="text-5xl md:text-7xl font-display font-bold text-white mb-4">
+                            {lang === 'fr' ? 'PROJETS' : 'WORK'}
+                        </h2>
+                        <p className="text-xl text-gray-400 font-light">
+                            {lang === 'fr'
+                                ? 'Architectures déployées, moteurs de caisse intelligents & systèmes IA autonomes.'
+                                : 'Deployed architectures, intelligent POS engines & AI systems.'}
+                        </p>
                     </div>
                     <div className="flex flex-col md:items-end gap-3">
                         <a href="https://github.com/Boulagjame-dev" target="_blank" rel="noreferrer" className="text-lumina-accent hover:text-white transition-colors flex items-center gap-2 font-mono text-sm uppercase tracking-wider">
-                            View All Repositories <ArrowRight className="w-4 h-4" />
+                            {lang === 'fr' ? 'Voir Tous les Dépôts' : 'View All Repositories'} <ArrowRight className="w-4 h-4" />
                         </a>
-                        <span className="text-xs font-mono text-gray-500">{filteredProjects.length} Projects Loaded</span>
+                        <span className="text-xs font-mono text-gray-500">
+                            {filteredProjects.length} {lang === 'fr' ? 'Projets Chargés' : 'Projects Loaded'}
+                        </span>
                     </div>
                 </div>
 
                 {/* Filter Pills */}
                 <div className="flex flex-wrap gap-2.5 mb-12">
-                    {categories.map((cat) => (
-                        <button
-                            key={cat}
-                            onClick={() => setActiveCategory(cat)}
-                            className={`px-5 py-2.5 rounded-full font-mono text-xs uppercase tracking-wider transition-all duration-300 clickable ${
-                                activeCategory === cat
-                                    ? 'bg-lumina-accent text-black font-bold shadow-[0_0_20px_rgba(163,255,206,0.35)] scale-105'
-                                    : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/10'
-                            }`}
-                        >
-                            {cat}
-                        </button>
-                    ))}
+                    {categories.map((cat) => {
+                        const label = lang === 'fr' ? cat.labelFr : cat.labelEn;
+                        return (
+                            <button
+                                key={cat.id}
+                                onClick={() => setActiveCategory(cat.id)}
+                                className={`px-5 py-2.5 rounded-full font-mono text-xs uppercase tracking-wider transition-all duration-300 clickable ${
+                                    activeCategory === cat.id
+                                        ? 'bg-lumina-accent text-black font-bold shadow-[0_0_20px_rgba(163,255,206,0.35)] scale-105'
+                                        : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/10'
+                                }`}
+                            >
+                                {label}
+                            </button>
+                        );
+                    })}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -200,13 +250,15 @@ export const Home: React.FC = () => {
 
                     <h2 className="text-4xl font-display font-bold mb-6">{INITIAL_PROFILE.name}</h2>
                     <p className="text-xl md:text-3xl text-white font-light leading-relaxed mb-12 max-w-3xl mx-auto">
-                        "{INITIAL_PROFILE.bio}"
+                        "{lang === 'fr' ? INITIAL_PROFILE.bioFr : INITIAL_PROFILE.bio}"
                     </p>
 
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-left mt-16 p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/5">
                         <div className="p-4 border-l-2 border-lumina-accent/20">
-                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">Web Apps & SaaS</h4>
-                            <ul className="text-gray-400 space-y-2 text-sm font-medium">
+                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">
+                                {lang === 'fr' ? 'Applications & SaaS' : 'Web Apps & SaaS'}
+                            </h4>
+                            <ul className="text-gray-400 space-y-2 text-sm font-medium font-mono">
                                 <li>React 19 / Next.js 16</li>
                                 <li>Turborepo / Vite</li>
                                 <li>Tailwind / Glassmorphism</li>
@@ -214,8 +266,10 @@ export const Home: React.FC = () => {
                             </ul>
                         </div>
                         <div className="p-4 border-l-2 border-lumina-accent/20">
-                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">Databases & Ops</h4>
-                            <ul className="text-gray-400 space-y-2 text-sm font-medium">
+                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">
+                                {lang === 'fr' ? 'Bases & Opérations' : 'Databases & Ops'}
+                            </h4>
+                            <ul className="text-gray-400 space-y-2 text-sm font-medium font-mono">
                                 <li>PostgreSQL / Supabase</li>
                                 <li>Row-Level Security (RLS)</li>
                                 <li>Multi-tenant Isolation</li>
@@ -223,8 +277,10 @@ export const Home: React.FC = () => {
                             </ul>
                         </div>
                         <div className="p-4 border-l-2 border-lumina-accent/20">
-                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">Automation & Bots</h4>
-                            <ul className="text-gray-400 space-y-2 text-sm font-medium">
+                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">
+                                {lang === 'fr' ? 'Automatisation & Bots' : 'Automation & Bots'}
+                            </h4>
+                            <ul className="text-gray-400 space-y-2 text-sm font-medium font-mono">
                                 <li>n8n (Self-hosted)</li>
                                 <li>Telegram Bot APIs</li>
                                 <li>Headless Edge Studio</li>
@@ -232,8 +288,10 @@ export const Home: React.FC = () => {
                             </ul>
                         </div>
                         <div className="p-4 border-l-2 border-lumina-accent/20">
-                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">AI Intelligence</h4>
-                            <ul className="text-gray-400 space-y-2 text-sm font-medium">
+                            <h4 className="text-lumina-accent font-mono text-xs mb-3 font-bold uppercase tracking-wider">
+                                {lang === 'fr' ? 'Intelligence Artificielle' : 'AI Intelligence'}
+                            </h4>
+                            <ul className="text-gray-400 space-y-2 text-sm font-medium font-mono">
                                 <li>Gemini Pro & Vision OCR</li>
                                 <li>Autonomous Agent Swarms</li>
                                 <li>MicroHard CAI/MGI</li>
@@ -244,7 +302,7 @@ export const Home: React.FC = () => {
                 </div>
             </section>
 
-            {/* TESTIMONIALS */}
+            {/* TESTIMONIALS & ECOSYSTEM */}
             <Testimonials />
 
             {/* CONTACT SECTION */}
@@ -255,14 +313,21 @@ export const Home: React.FC = () => {
                         {/* Text Side */}
                         <div>
                             <div className="inline-block mb-6 px-3 py-1 border border-white/20 rounded-full">
-                                <span className="font-mono text-xs text-white uppercase tracking-widest">Efficiency Audit</span>
+                                <span className="font-mono text-xs text-white uppercase tracking-widest">
+                                    {lang === 'fr' ? "Audit d'Efficacité" : "Efficiency Audit"}
+                                </span>
                             </div>
                             <h2 className="text-6xl font-display font-bold text-white mb-6 leading-tight">
-                                STOP LEAKING <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-lumina-accent to-lumina-secondary">REVENUE.</span>
+                                {lang === 'fr' ? (
+                                    <>CESSEZ DE PERDRE <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-lumina-accent to-lumina-secondary">DU REVENU.</span></>
+                                ) : (
+                                    <>STOP LEAKING <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-lumina-accent to-lumina-secondary">REVENUE.</span></>
+                                )}
                             </h2>
-                            <p className="text-gray-400 text-lg mb-12 leading-relaxed max-w-md">
-                                Manual data entry and disconnected systems are costing you hours every day. I build the infrastructure that gives you that time back.
+                            <p className="text-gray-400 text-lg mb-12 leading-relaxed max-w-md font-light">
+                                {lang === 'fr'
+                                    ? "La saisie manuelle et les outils déconnectés vous coûtent des heures chaque jour. Je construis l'infrastructure qui vous redonne ce temps."
+                                    : "Manual data entry and disconnected systems are costing you hours every day. I build the infrastructure that gives you that time back."}
                             </p>
 
                             <div className="space-y-6">
@@ -273,11 +338,13 @@ export const Home: React.FC = () => {
                                     className="block group bg-white text-black p-6 rounded-2xl hover:bg-lumina-accent transition-all duration-300 shadow-xl border border-transparent hover:border-white/50 clickable"
                                 >
                                     <div className="flex justify-between items-center mb-2">
-                                        <span className="font-bold text-xl">Book a 30-Min Audit</span>
+                                        <span className="font-bold text-xl">
+                                            {lang === 'fr' ? 'Réserver un Audit de 30 Min' : 'Book a 30-Min Audit'}
+                                        </span>
                                         <ArrowRight className="w-6 h-6 group-hover:-rotate-45 transition-transform duration-300" />
                                     </div>
                                     <div className="text-sm opacity-70 flex items-center gap-2">
-                                        <Calendar size={14} /> Direct Calendar Access
+                                        <Calendar size={14} /> {lang === 'fr' ? 'Accès Direct Calendrier' : 'Direct Calendar Access'}
                                     </div>
                                 </a>
 
@@ -297,10 +364,14 @@ export const Home: React.FC = () => {
                             <div className="absolute -inset-1 bg-gradient-to-r from-lumina-accent/20 to-lumina-secondary/20 rounded-2xl blur-xl -z-10"></div>
 
                             <form onSubmit={handleContactSubmit} className="bg-black border border-white/10 p-8 rounded-2xl shadow-2xl relative">
-                                <h3 className="text-xl font-bold mb-6 text-white">Project Inquiry</h3>
+                                <h3 className="text-xl font-bold mb-6 text-white font-display">
+                                    {lang === 'fr' ? 'Demande de Projet' : 'Project Inquiry'}
+                                </h3>
                                 <div className="space-y-6">
                                     <div>
-                                        <label htmlFor="name" className="block text-xs font-mono text-gray-500 mb-2 uppercase tracking-wider">Full Name</label>
+                                        <label htmlFor="name" className="block text-xs font-mono text-gray-500 mb-2 uppercase tracking-wider">
+                                            {lang === 'fr' ? 'Nom Complet' : 'Full Name'}
+                                        </label>
                                         <input
                                             type="text"
                                             id="name"
@@ -313,7 +384,9 @@ export const Home: React.FC = () => {
                                     </div>
 
                                     <div>
-                                        <label htmlFor="email" className="block text-xs font-mono text-gray-500 mb-2 uppercase tracking-wider">Work Email</label>
+                                        <label htmlFor="email" className="block text-xs font-mono text-gray-500 mb-2 uppercase tracking-wider">
+                                            {lang === 'fr' ? 'Email Professionnel' : 'Work Email'}
+                                        </label>
                                         <input
                                             type="email"
                                             id="email"
@@ -326,21 +399,29 @@ export const Home: React.FC = () => {
                                     </div>
 
                                     <div>
-                                        <label htmlFor="message" className="block text-xs font-mono text-gray-500 mb-2 uppercase tracking-wider">What represents your biggest bottleneck?</label>
+                                        <label htmlFor="message" className="block text-xs font-mono text-gray-500 mb-2 uppercase tracking-wider">
+                                            {lang === 'fr' ? 'Quel est votre goulot d’étranglement ?' : 'What represents your biggest bottleneck?'}
+                                        </label>
                                         <textarea
                                             id="message"
                                             required
                                             value={formData.message}
                                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                            className="w-full bg-white/5 border border-white/10 rounded-lg py-4 px-4 text-white focus:border-lumina-accent outline-none transition-all min-h-[150px] clickable resize-none"
-                                            placeholder="Describe the repetitive task or workflow that is slowing you down..."
+                                            className="w-full bg-white/5 border border-white/10 rounded-lg py-4 px-4 text-white focus:border-lumina-accent outline-none transition-all min-h-[150px] clickable resize-none font-light"
+                                            placeholder={lang === 'fr'
+                                                ? 'Décrivez la tâche répétitive ou le workflow qui ralentit votre entreprise...'
+                                                : 'Describe the repetitive task or workflow that is slowing you down...'}
                                         />
                                     </div>
 
                                     {isSent && (
                                         <div className="p-3 mb-4 bg-lumina-accent/15 border border-lumina-accent/50 rounded-lg text-lumina-accent text-xs font-mono text-center flex items-center justify-center gap-2">
                                             <CheckCircle className="w-4 h-4 shrink-0 text-lumina-accent" />
-                                            <span>Email draft opened for boulagjame@gmail.com</span>
+                                            <span>
+                                                {lang === 'fr'
+                                                    ? 'Brouillon d’email ouvert pour boulagjame@gmail.com'
+                                                    : 'Email draft opened for boulagjame@gmail.com'}
+                                            </span>
                                         </div>
                                     )}
 
@@ -350,16 +431,16 @@ export const Home: React.FC = () => {
                                         className="w-full bg-lumina-accent text-black font-bold py-4 rounded-lg hover:bg-white transition-all flex items-center justify-center gap-2 group clickable disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         {isSubmitting ? (
-                                            <span>Sending...</span>
+                                            <span>{lang === 'fr' ? 'Envoi en cours...' : 'Sending...'}</span>
                                         ) : (
                                             <>
-                                                <span>Send Message</span>
+                                                <span>{lang === 'fr' ? 'Envoyer le Message' : 'Send Message'}</span>
                                                 <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                             </>
                                         )}
                                     </button>
-                                    <p className="text-[10px] text-center text-gray-500 mt-2">
-                                        *Opens your default email client
+                                    <p className="text-[10px] text-center text-gray-500 mt-2 font-mono">
+                                        {lang === 'fr' ? '*Ouvre votre client de messagerie par défaut' : '*Opens your default email client'}
                                     </p>
                                 </div>
                             </form>
