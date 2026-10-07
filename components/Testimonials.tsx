@@ -1,5 +1,5 @@
 import React from 'react';
-import { Database, CreditCard, Cpu, Server, Star, Quote, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Cpu, Activity, Terminal, Star, CheckCircle2 } from 'lucide-react';
 import { CLIENT_TESTIMONIALS } from '../constants';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -84,32 +84,137 @@ export const Testimonials: React.FC = () => {
           })}
         </div>
 
-        {/* Ecosystem Infrastructure Banner */}
-        <div className="text-center pt-8 border-t border-white/10">
-          <p className="font-mono text-xs text-gray-400 uppercase tracking-[0.2em] mb-8">
-            {lang === 'fr' ? 'Propulsé par les Meilleures Technologies' : lang === 'ru' ? 'Надежная Технологическая База' : 'Powered by Best-in-Class Infrastructure'}
-          </p>
+        {/* Hardened Architecture & Industrial Primitives Section */}
+        <div className="pt-16 border-t border-white/10">
+          <div className="text-center mb-12">
+            <div className="inline-block mb-3 px-3 py-1 border border-lumina-accent/30 rounded-full bg-lumina-accent/5 backdrop-blur">
+              <span className="font-mono text-[11px] text-lumina-accent uppercase tracking-widest font-semibold">
+                {lang === 'fr' 
+                  ? 'Primitives Systèmes & Fondations Critiques'
+                  : lang === 'ru'
+                  ? 'Инженерные Примитивы & Боевой Контур'
+                  : 'Mission-Critical Primitives & Systems Architecture'}
+              </span>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-3">
+              {lang === 'fr'
+                ? 'Architecture Haute Disponibilité & Standards Industriels'
+                : lang === 'ru'
+                ? 'Архитектура Критических Нагрузок & Промышленный Стандарт'
+                : 'Hardened Architecture & Industrial-Grade Infrastructure'}
+            </h3>
+            <p className="text-sm text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+              {lang === 'fr'
+                ? 'Aucun wrapper fragile ni prototype jetable. Chaque composant repose sur des moteurs durcis, une isolation stricte des données et des algorithmes déterministes.'
+                : lang === 'ru'
+                ? 'Никаких шаблонных оберток. Каждая система строится на отказоустойчивых ядрах данных, строгой криптографической изоляции и детерминированных алгоритмах.'
+                : 'Zero fragile wrappers or toy prototypes. Every deployment is anchored in resilient data primitives, cryptographic tenant isolation, and deterministic compute.'}
+            </p>
+          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 opacity-80 hover:opacity-100 transition-opacity duration-300">
-            {/* Supabase */}
-            <div className="bg-white/5 border border-white/5 p-5 rounded-xl flex items-center justify-center gap-3 hover:bg-white/10 hover:border-lumina-accent/30 transition-all group">
-              <Database className="w-5 h-5 text-lumina-accent" />
-              <span className="font-mono text-sm font-semibold text-white group-hover:text-lumina-accent">Supabase</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* 01 / Kernel-Level Tenant Isolation */}
+            <div className="bg-lumina-card/25 backdrop-blur-md border border-white/10 hover:border-lumina-accent/40 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-10 h-10 rounded-xl bg-lumina-accent/10 border border-lumina-accent/20 flex items-center justify-center text-lumina-accent group-hover:bg-lumina-accent group-hover:text-black transition-all">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <span className="font-mono text-[10px] text-lumina-accent bg-lumina-accent/10 border border-lumina-accent/20 px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold">
+                  PostgreSQL RLS • Zero-Leak RBAC
+                </span>
+              </div>
+              <h4 className="text-white font-bold text-base mb-2 group-hover:text-lumina-accent transition-colors font-display">
+                {lang === 'fr'
+                  ? '01 / Isolation Multi-Tenant Cryptographique'
+                  : lang === 'ru'
+                  ? '01 / Строгая Изоляция Данных & RLS'
+                  : '01 / Cryptographic Multi-Tenant Isolation'}
+              </h4>
+              <p className="text-gray-400 text-xs leading-relaxed font-light">
+                {lang === 'fr'
+                  ? 'Règles de sécurité Row-Level Security natives au moteur de base de données. Étanchéité absolue entre organisations, protection du secret d’affaires et auditabilité institutionnelle conforme Loi 112-12.'
+                  : lang === 'ru'
+                  ? 'Политики Row-Level Security на уровне ядра базы данных. Абсолютная изоляция организаций, защита коммерческой тайны и криптографическая аудируемость без утечек данных.'
+                  : 'Kernel-level Row-Level Security policies. Absolute data segregation across organizations, commercial confidentiality protection, and strict institutional auditability.'}
+              </p>
             </div>
-            {/* Stripe */}
-            <div className="bg-white/5 border border-white/5 p-5 rounded-xl flex items-center justify-center gap-3 hover:bg-white/10 hover:border-blue-400/30 transition-all group">
-              <CreditCard className="w-5 h-5 text-blue-400" />
-              <span className="font-mono text-sm font-semibold text-white group-hover:text-blue-400">Stripe</span>
+
+            {/* 02 / Multi-Agent Swarms & Cognitive RAG */}
+            <div className="bg-lumina-card/25 backdrop-blur-md border border-white/10 hover:border-purple-400/40 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:bg-purple-500 group-hover:text-black transition-all">
+                  <Cpu className="w-5 h-5" />
+                </div>
+                <span className="font-mono text-[10px] text-purple-400 bg-purple-500/10 border border-purple-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold">
+                  LangGraph • State Machines • pgvector
+                </span>
+              </div>
+              <h4 className="text-white font-bold text-base mb-2 group-hover:text-purple-300 transition-colors font-display">
+                {lang === 'fr'
+                  ? '02 / Essaims Multi-Agents & RAG Déterministe'
+                  : lang === 'ru'
+                  ? '02 / Мультиагентные Рои & Детерминированный RAG'
+                  : '02 / Multi-Agent Swarms & Deterministic RAG'}
+              </h4>
+              <p className="text-gray-400 text-xs leading-relaxed font-light">
+                {lang === 'fr'
+                  ? 'Orchestration cognitive autonome via graphes d’états orientés. Architectures bi-moteurs (Mentor/Exécuteur), bases vectorielles pgvector et tolérance zéro hallucination pour la décision d’entreprise.'
+                  : lang === 'ru'
+                  ? 'Оркестрация автономных агентов на базе графов состояний (LangGraph). Двухмоторные архитектуры, векторные хранилища pgvector и нулевая толерантность к галлюцинациям.'
+                  : 'Autonomous cognitive swarms governed by directed state graphs. Dual-engine mentor/executor splits, embedded pgvector memory, and zero-hallucination guardrails.'}
+              </p>
             </div>
-            {/* Pinecone */}
-            <div className="bg-white/5 border border-white/5 p-5 rounded-xl flex items-center justify-center gap-3 hover:bg-white/10 hover:border-purple-400/30 transition-all group">
-              <Cpu className="w-5 h-5 text-purple-400" />
-              <span className="font-mono text-sm font-semibold text-white group-hover:text-purple-400">Pinecone</span>
+
+            {/* 03 / Real-Time Event Telemetry */}
+            <div className="bg-lumina-card/25 backdrop-blur-md border border-white/10 hover:border-blue-400/40 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-black transition-all">
+                  <Activity className="w-5 h-5" />
+                </div>
+                <span className="font-mono text-[10px] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold">
+                  Sub-Second Sync • Webhook Mesh
+                </span>
+              </div>
+              <h4 className="text-white font-bold text-base mb-2 group-hover:text-blue-300 transition-colors font-display">
+                {lang === 'fr'
+                  ? '03 / Télémesure Événementielle & Télégraphie Financière'
+                  : lang === 'ru'
+                  ? '03 / Потоковая Телеметрия & Событийные Конвейеры'
+                  : '03 / Event-Driven Telemetry & Low-Latency Fabric'}
+              </h4>
+              <p className="text-gray-400 text-xs leading-relaxed font-light">
+                {lang === 'fr'
+                  ? 'Streaming transactionnel chiffré et webhooks asynchrones. Clôtures de caisse automatiques (Z), alertes de trésorerie critiques et réconciliation financière sub-seconde sans intervention humaine.'
+                  : lang === 'ru'
+                  ? 'Потоковая передача транзакций через зашифрованные вебхуки и Telegram Bot API. Автоматические Z-отчеты кассы, мгновенные оповещения об остатках и ликвидация кассовых разрывов.'
+                  : 'Real-time transactional streaming over encrypted webhooks and telemetry APIs. Automated POS Z-closures, immediate treasury alerts, and sub-second financial reconciliation.'}
+              </p>
             </div>
-            {/* FastAPI */}
-            <div className="bg-white/5 border border-white/5 p-5 rounded-xl flex items-center justify-center gap-3 hover:bg-white/10 hover:border-yellow-400/30 transition-all group">
-              <Server className="w-5 h-5 text-yellow-400" />
-              <span className="font-mono text-sm font-semibold text-white group-hover:text-yellow-400">FastAPI</span>
+
+            {/* 04 / Deterministic Vector Compute */}
+            <div className="bg-lumina-card/25 backdrop-blur-md border border-white/10 hover:border-amber-400/40 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-black transition-all">
+                  <Terminal className="w-5 h-5" />
+                </div>
+                <span className="font-mono text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold">
+                  Headless Vector • $0 Recurring API
+                </span>
+              </div>
+              <h4 className="text-white font-bold text-base mb-2 group-hover:text-amber-300 transition-colors font-display">
+                {lang === 'fr'
+                  ? '04 / Calcul Vectoriel Déterministe (0$ Coût API)'
+                  : lang === 'ru'
+                  ? '04 / Детерминированный Headless-Рендеринг ($0 API)'
+                  : '04 / Deterministic Headless Compute ($0 Recurring API)'}
+              </h4>
+              <p className="text-gray-400 text-xs leading-relaxed font-light">
+                {lang === 'fr'
+                  ? 'Élimination des modèles d’images tiers coûteux au profit d’un moteur de rendu headless natif 4500×5400px. Sortie vectorielle de précision industrielle avec coût d’API nul et zéro fuite mémoire.'
+                  : lang === 'ru'
+                  ? 'Замена дорогостоящих коммерческих генераторов картинок прямым headless векторным движком. Высокоточный рендеринг 4500×5400px для печатных фабрик с $0 переменных затрат на API.'
+                  : 'Bypassing costly proprietary image APIs through deterministic headless browser vector rendering. 4500×5400px print-grade precision at true $0 marginal compute cost.'}
+              </p>
             </div>
           </div>
         </div>
