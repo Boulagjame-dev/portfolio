@@ -95,7 +95,7 @@ export const Home: React.FC = () => {
                 <div className="text-center z-10 px-4">
                     <div className="inline-block mb-8 px-4 py-2 border border-lumina-accent/30 rounded-full bg-lumina-accent/5 backdrop-blur clickable transition-transform hover:scale-105">
                         <span className="font-mono text-xs text-lumina-accent uppercase tracking-[0.2em] font-bold">
-                            {lang === 'fr' ? 'Forward Deployed Engineering • Systèmes Critiques' : lang === 'ru' ? 'Forward Deployed Engineering • Критические Системы' : 'Forward Deployed Engineering • Mission-Critical Systems'}
+                            {lang === 'fr' ? 'Rigueur Scientifique • Systèmes Critiques' : lang === 'ru' ? 'Научная Строгость • Критические Системы' : 'Scientific Rigor • Mission-Critical Systems'}
                         </span>
                     </div>
 
