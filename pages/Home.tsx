@@ -105,21 +105,27 @@ export const Home: React.FC = () => {
                             : lang === 'ru'
                             ? { w1: 'ТОЧНОСТЬ', w2: 'АВТОМАТИЗАЦИЯ', w3: 'АРХИТЕКТУРА' }
                             : { w1: 'PRECISION', w2: 'AUTOMATION', w3: 'ARCHITECTURE' };
+                        
+                        // Adaptive font size so long words (АВТОМАТИЗАЦИЯ / AUTOMATISATION) never wrap awkwardly
+                        const fontSizeClass = (lang === 'ru' || lang === 'fr')
+                            ? "text-[clamp(2.2rem,6.2vw,5.6rem)]"
+                            : "text-[clamp(2.5rem,7.5vw,6.5rem)]";
+
                         return (
-                            <h1 className="font-display font-bold text-[8vw] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40 select-none tracking-tighter max-w-6xl mx-auto">
-                                <div className="inline-block">
+                            <h1 className={`font-display font-bold ${fontSizeClass} leading-[0.95] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40 select-none tracking-tight max-w-7xl mx-auto`}>
+                                <div className="inline-block whitespace-nowrap">
                                     {titleWords.w1.split('').map((char, i) => (
                                         <span key={i} className="fantasy-char text-white transition-colors" data-char={char}>{char}</span>
                                     ))}
                                 </div>
                                 <br />
-                                <div className="inline-block">
+                                <div className="inline-block whitespace-nowrap">
                                     {titleWords.w2.split('').map((char, i) => (
                                         <span key={i} className="fantasy-char text-white transition-colors" data-char={char}>{char}</span>
                                     ))}
                                 </div>
                                 <br />
-                                <div className="inline-block">
+                                <div className="inline-block whitespace-nowrap">
                                     {titleWords.w3.split('').map((char, i) => (
                                         <span key={i} className="fantasy-char text-lumina-accent transition-colors" data-char={char}>{char}</span>
                                     ))}
